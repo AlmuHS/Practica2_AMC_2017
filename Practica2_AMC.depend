@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1511871918 source:/home/almu/Practica2_AMC/main.cpp
+	<iostream>
+
+1511874244 source:/home/almu/Practica2_AMC/src/NearestTrioProblem.cpp
+	"NearestTrioProblem.h"
+
+1511874238 /home/almu/Practica2_AMC/include/NearestTrioProblem.h
+
+1511874523 source:/home/almu/Practica2_AMC/src/NodeSet.cpp
+	"NodeSet.h"
+	<random>
+
+1511874937 /home/almu/Practica2_AMC/include/NodeSet.h
+	<vector>
+	<utility>
+
