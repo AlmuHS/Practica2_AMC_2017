@@ -7,11 +7,11 @@
 
 class GenNodeSet
 {
-    NodeSet NS;
+    NodeSet _NS;
 
     public:
         GenNodeSet(int size);
-        void gen_random_nodeset();
+        void genRandomNodeSet();
 
     protected:
 

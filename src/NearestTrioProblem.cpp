@@ -3,39 +3,47 @@
 #include <cmath>
 #include <vector>
 
-NearestTrioProblem::NearestTrioProblem(NodeSet NS_): this -> NS = NS_
+NearestTrioProblem::NearestTrioProblem(NodeSet NS): _NS(NS)
 {
 
 }
 
 
-float NearestTrioProblem::Calculate_Distance(std::pair<float, float> p1, std::pair<float, float> p2)
+float NearestTrioProblem::calculateDistance(std::pair<float, float> p1, std::pair<float, float> p2)
 {
     return sqrt( pow(p1.first - p2.first, 2) + pow(p1.second - p2.second, 2) );
 }
 
 
-double NearestTrioProblem::SimpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
 
-    double min_distance = Calculate_Distance(NS.get_pair(0), NS.get_pair(1)) +
-                          Calculate_Distance(NS.get_pair(0), NS.get_pair(2)) +
-                          Calculate_Distance(NS.get_pair(1), NS.get_pair(2));
+    p1 = _NS.getPair(0);
+    p2 = _NS.getPair(1);
+    p3 = _NS.getPair(2);
 
-    for(int i = 0; i < NS.get_size(); i++)
+    double min_distance = calculateDistance(p1, p2) + calculateDistance(p1, p3) + calculateDistance(p2, p3);
+
+
+    for(int i = 0; i < _NS.getSize(); i++)
     {
-        for(int j = 0; j < NS.get_size(); j++)
+        for(int j = 0; j < _NS.getSize(); j++)
         {
-            for(int k = 0; k < NS.get_size(); k++)
+            for(int k = 0; k < _NS.getSize(); k++)
             {
-                double distance1 = Calculate_Distance(NS.get_pair(i), NS.get_pair(j));
-                double distance2 = Calculate_Distance(NS.get_pair(i), NS.get_pair(k));
-                double distance3 = Calculate_Distance(NS.get_pair(j), NS.get_pair(k));
+
+                double distance1 = calculateDistance(_NS.getPair(i), _NS.getPair(j));
+                double distance2 = calculateDistance(_NS.getPair(i), _NS.getPair(k));
+                double distance3 = calculateDistance(_NS.getPair(j), _NS.getPair(k));
 
                 double sum_distance = distance1 + distance2 + distance3;
 
-                if(sum_distance < min_distance)
+                if(sum_distance < min_distance){
                     min_distance = sum_distance;
+                    p1 = _NS.getPair(i);
+                    p2 = _NS.getPair(j);
+                    p3 = _NS.getPair(k);
+                }
             }
         }
     }

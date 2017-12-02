@@ -12,10 +12,9 @@ class NodeSet
         NodeSet(int size);
         NodeSet(const NodeSet& NS);
 
-        void gen_random_nodeset();
-        void add_pair(float x, float y);
-        std::pair<float, float> get_pair(int position);
-        int get_size();
+        void addPair(float x, float y);
+        std::pair<float, float> getPair(int position);
+        int getSize();
 };
 
 

@@ -7,17 +7,17 @@
 class NearestTrioProblem
 {
     public:
-        NearestTrioProblem(NodeSet NS_);
+        NearestTrioProblem(NodeSet NS);
 
-        float Calculate_Distance(std::pair<float, float> p1, std::pair<float, float> p2);
+        float calculateDistance(std::pair<float, float> p1, std::pair<float, float> p2);
 
-        double SimpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+        double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
 
 
     protected:
 
-        NodeSet NS;
+        NodeSet _NS;
 
 };
 
