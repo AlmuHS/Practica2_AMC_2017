@@ -1,4 +1,4 @@
-#include "GenNodeSet.h"
+#include "../include/GenNodeSet.h"
 
 GenNodeSet::GenNodeSet(int size): NS(size)
 {

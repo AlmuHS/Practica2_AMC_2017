@@ -1,4 +1,4 @@
-#include "NearestTrioProblem.h"
+#include "../include/NearestTrioProblem.h"
 
 #include <cmath>
 #include <vector>

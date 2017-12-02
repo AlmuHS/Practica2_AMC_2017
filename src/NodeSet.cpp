@@ -1,4 +1,4 @@
-#include "NodeSet.h"
+#include "../include/NodeSet.h"
 
 NodeSet::NodeSet(int size): node_set(size)
 {
