@@ -6,19 +6,20 @@
 
 class NearestTrioProblem
 {
-    public:
-        NearestTrioProblem(NodeSet NS);
+private:
+    NodeSet _NS;
 
-        float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
+public:
+    NearestTrioProblem(NodeSet NS);
 
-        double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+    float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
 
-        double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+    double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+
+    double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
 
-    protected:
 
-        NodeSet _NS;
 
 };
 

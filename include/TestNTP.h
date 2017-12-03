@@ -15,7 +15,7 @@ private:
 public:
     TestNTP();
 
-    void testRandom(int size);
+    void testRandom();
     void testFromFile();
 };
 

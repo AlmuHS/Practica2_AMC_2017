@@ -1,5 +1,6 @@
 #include "../include/GenNodeSet.h"
 #include <iostream>
+#include <fstream>
 
 GenNodeSet::GenNodeSet()
 {
@@ -43,5 +44,25 @@ NodeSet GenNodeSet::xSortNodeSet(){
 }
 
 NodeSet GenNodeSet::genNodeSetFromFile(std::string filename){
+    std::ifstream file(filename.c_str());
+    std::string line = "";
+    float x, y;
+    int n = 1;
 
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+
+    while(n != 0){
+        file >> n;
+        if(n != 0){
+            file >> x;
+            file >> y;
+            _NS.addPair(x, y);
+        }
+    }
+    return _NS;
 }

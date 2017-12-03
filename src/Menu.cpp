@@ -57,6 +57,7 @@ void Menu::MainMenu()
         {
         case 0:
             exit(0);
+            break;
 
         case 1:
             NTPMenu();
@@ -65,13 +66,13 @@ void Menu::MainMenu()
         }
 
         std::cout<<"\n\nPress ENTER to continue";
-        //std::cin.clear();
-        //std::cin.ignore();
-        //std::cin.ignore();
-
-        std::cin.seekg(std::ios_base::end);
         std::cin.clear();
         std::cin.ignore();
+        std::cin.ignore();
+
+        /*std::cin.seekg(std::ios_base::end);
+        std::cin.clear();
+        std::cin.ignore();*/
         clear();
     }
     while(option != 0);
@@ -82,15 +83,7 @@ void Menu::NTPMenu()
 {
     int option1 = 0, option2 = 0;
     int size;
-
-    std::cout<<"Nearest Trio Problem\n"
-             <<"----------------------\n"
-             <<"1. Test Random set\n"
-             <<"2. Test from File\n"
-             <<"Select option: ";
-    std::cin>>option1;
-
-    clear();
+    TestNTP TNTP;
 
     std::cout<<"Nearest Trio Problem\n"
              <<"----------------------\n"
@@ -98,17 +91,33 @@ void Menu::NTPMenu()
              <<"1. Simple \n"
              <<"2. Divide & Conquer\n"
              <<"Select option: ";
+    std::cin>>option1;
+
+    clear();
+
+    std::cout<<"Nearest Trio Problem\n"
+             <<"----------------------\n"
+             <<"1. Test Random set\n"
+             <<"2. Test from File\n"
+             <<"Select option: ";
     std::cin>>option2;
 
-    switch(option1)
+
+    switch(option2)
     {
     case 1:
-        std::cout<<"Set size: ";
-        std::cin>>size;
+        clear();
+
+        TNTP.testRandom();
+        break;
+
+    case 2:
 
         clear();
 
-        TestNTP TNTP;
-        TNTP.testRandom(size);
+        TNTP.testFromFile();
+
+        break;
+
     };
 }
