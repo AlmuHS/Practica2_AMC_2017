@@ -8,7 +8,6 @@
 class GenNodeSet
 {
 
-
 public:
     GenNodeSet(int size);
     NodeSet genRandomNodeSet();
