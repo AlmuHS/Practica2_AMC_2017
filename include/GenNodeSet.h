@@ -2,6 +2,7 @@
 #define GENNODESET_H
 
 #include <random>
+#include <string>
 
 #include "NodeSet.h"
 
@@ -14,8 +15,8 @@ private:
 public:
     GenNodeSet();
     NodeSet genRandomNodeSet(int size);
-    NodeSet genXSortedNodeSet(int size);
-    NodeSet GenNodeSetFromFile();
+    NodeSet xSortNodeSet();
+    NodeSet genNodeSetFromFile(std::string filename);
 };
 
 #endif // GENNODESET_H

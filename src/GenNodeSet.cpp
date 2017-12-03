@@ -20,8 +20,7 @@ NodeSet GenNodeSet::genRandomNodeSet(int size)
     return _NS;
 }
 
-NodeSet GenNodeSet::genXSortedNodeSet(int size){
-    genRandomNodeSet(size);
+NodeSet GenNodeSet::xSortNodeSet(){
 
     for(int h = _NS.getSize() / 2; h > 0; h /= 2)
     {
@@ -43,3 +42,6 @@ NodeSet GenNodeSet::genXSortedNodeSet(int size){
     return _NS;
 }
 
+NodeSet GenNodeSet::genNodeSetFromFile(std::string filename){
+
+}

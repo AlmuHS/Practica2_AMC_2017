@@ -64,8 +64,13 @@ void Menu::MainMenu()
 
         }
 
-        std::cout<<"\n\nPress ENTER to continue\n";
-        std::cin.ignore();
+        std::cout<<"\n\nPress ENTER to continue";
+        //std::cin.clear();
+        //std::cin.ignore();
+        //std::cin.ignore();
+
+        std::cin.seekg(std::ios_base::end);
+        std::cin.clear();
         std::cin.ignore();
         clear();
     }

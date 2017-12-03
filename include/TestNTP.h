@@ -4,7 +4,7 @@
 #include "../include/GenNodeSet.h"
 #include "../include/NearestTrioProblem.h"
 
-#include <string>
+
 
 class TestNTP
 {
@@ -16,7 +16,7 @@ public:
     TestNTP();
 
     void testRandom(int size);
-    void testFromFile(std::string filename);
+    void testFromFile();
 };
 
 #endif // TESTNTP_H

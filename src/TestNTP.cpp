@@ -1,6 +1,7 @@
 #include "TestNTP.h"
 
 #include <iostream>
+#include <string>
 
 TestNTP::TestNTP()
 {
@@ -24,6 +25,6 @@ void TestNTP::testRandom(int size){
 
 }
 
-void TestNTP::testFromFile(std::string filename){
+void TestNTP::testFromFile(){
 
 }
