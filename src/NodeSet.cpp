@@ -1,9 +1,10 @@
 #include "../include/NodeSet.h"
 
+#include <iostream>
+
 NodeSet::NodeSet(int size): node_set(size)
 {
     //ctor
-
 }
 
 NodeSet::NodeSet(const NodeSet& NS): node_set(NS.node_set)
@@ -22,3 +23,11 @@ std::pair<float, float> NodeSet::getPair(int position){
 int NodeSet::getSize(){
     return node_set.size();
 }
+
+void NodeSet::showNodeSet(){
+    for(int i = 0; i < node_set.size(); i++){
+        std::cout<<"< "<<node_set[i].first<<", "<<node_set[i].second<<" >"<<std::endl;
+    }
+}
+
+

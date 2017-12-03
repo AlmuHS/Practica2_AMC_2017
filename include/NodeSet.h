@@ -8,13 +8,14 @@ class NodeSet
 {
     std::vector<std::pair<float, float> > node_set;
 
-    public:
-        NodeSet(int size);
-        NodeSet(const NodeSet& NS);
+public:
+    NodeSet(int size);
+    NodeSet(const NodeSet& NS);
 
-        void addPair(float x, float y);
-        std::pair<float, float> getPair(int position);
-        int getSize();
+    void addPair(float x, float y);
+    std::pair<float, float> getPair(int position);
+    int getSize();
+    void showNodeSet();
 };
 
 
