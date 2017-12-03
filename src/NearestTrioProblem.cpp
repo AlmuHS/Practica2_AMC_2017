@@ -32,18 +32,23 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
             for(int k = 0; k < _NS.getSize(); k++)
             {
 
-                double distance1 = calculateDistance(_NS.getPair(i), _NS.getPair(j));
-                double distance2 = calculateDistance(_NS.getPair(i), _NS.getPair(k));
-                double distance3 = calculateDistance(_NS.getPair(j), _NS.getPair(k));
+                if (i != j && i != k && j != k)
+                {
+                    double distance1 = calculateDistance(_NS.getPair(i), _NS.getPair(j));
+                    double distance2 = calculateDistance(_NS.getPair(i), _NS.getPair(k));
+                    double distance3 = calculateDistance(_NS.getPair(j), _NS.getPair(k));
 
-                double sum_distance = distance1 + distance2 + distance3;
+                    double sum_distance = distance1 + distance2 + distance3;
 
-                if(sum_distance < min_distance){
-                    min_distance = sum_distance;
-                    p1 = _NS.getPair(i);
-                    p2 = _NS.getPair(j);
-                    p3 = _NS.getPair(k);
+                    if(sum_distance < min_distance)
+                    {
+                        min_distance = sum_distance;
+                        p1 = _NS.getPair(i);
+                        p2 = _NS.getPair(j);
+                        p3 = _NS.getPair(k);
+                    }
                 }
+
             }
         }
     }
