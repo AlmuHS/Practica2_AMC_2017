@@ -64,7 +64,7 @@ void Menu::NTPMenu()
         std::cout<<"The minimal distance is: "<<mindistance<<std::endl
                 <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "
                 <<"<"<<p2.first<<", "<<p2.second<<"> "
-                <<"<"<<p3.first<<", "<<p3.second<<std::endl;
+                <<"<"<<p3.first<<", "<<p3.second<<">"<<std::endl;
 
 
     };

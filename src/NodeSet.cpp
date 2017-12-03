@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-NodeSet::NodeSet(int size): node_set(size)
+NodeSet::NodeSet()
 {
     //ctor
 }
