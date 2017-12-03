@@ -2,13 +2,12 @@
 
 #include <iostream>
 
-TestNTP::TestNTP(int size)
+TestNTP::TestNTP()
 {
     //ctor
-    this -> size = size;
 }
 
-void TestNTP::testRandom(){
+void TestNTP::testRandom(int size){
     NodeSet NS = GenNS.genRandomNodeSet(size);
 
     NS.showNodeSet();
@@ -22,5 +21,9 @@ void TestNTP::testRandom(){
             <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "
             <<"<"<<p2.first<<", "<<p2.second<<"> "
             <<"<"<<p3.first<<", "<<p3.second<<">"<<std::endl;
+
+}
+
+void TestNTP::testFromFile(std::string filename){
 
 }

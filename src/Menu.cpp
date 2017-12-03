@@ -44,7 +44,7 @@ void Menu::MainMenu()
     {
 
 
-        std::cout<<"\n\nComplex Algorithms Study\n"
+        std::cout<<"Complex Algorithms Study\n"
                  <<"----------------------------\n"
                  <<"0. Exit\n"
                  <<"1. Test Nearest Trio Problem\n"
@@ -55,11 +55,19 @@ void Menu::MainMenu()
 
         switch(option)
         {
+        case 0:
+            exit(0);
+
         case 1:
             NTPMenu();
             break;
 
         }
+
+        std::cout<<"\n\nPress ENTER to continue\n";
+        std::cin.ignore();
+        std::cin.ignore();
+        clear();
     }
     while(option != 0);
 
@@ -70,14 +78,18 @@ void Menu::NTPMenu()
     int option1 = 0, option2 = 0;
     int size;
 
-    std::cout<<"1. Test Random set\n"
+    std::cout<<"Nearest Trio Problem\n"
+             <<"----------------------\n"
+             <<"1. Test Random set\n"
              <<"2. Test from File\n"
              <<"Select option: ";
     std::cin>>option1;
 
     clear();
 
-    std::cout<<"Select algorithm: \n"
+    std::cout<<"Nearest Trio Problem\n"
+             <<"----------------------\n"
+             <<"Select algorithm: \n"
              <<"1. Simple \n"
              <<"2. Divide & Conquer\n"
              <<"Select option: ";
@@ -91,8 +103,7 @@ void Menu::NTPMenu()
 
         clear();
 
-        TestNTP TNTP(size);
-        TNTP.testRandom();
+        TestNTP TNTP;
+        TNTP.testRandom(size);
     };
-
 }

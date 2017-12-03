@@ -4,19 +4,19 @@
 #include "../include/GenNodeSet.h"
 #include "../include/NearestTrioProblem.h"
 
+#include <string>
+
 class TestNTP
 {
-    public:
-        TestNTP(int size);
+private:
 
-        void testRandom();
-
-    protected:
-
-    private:
-
-    int size;
     GenNodeSet GenNS;
+
+public:
+    TestNTP();
+
+    void testRandom(int size);
+    void testFromFile(std::string filename);
 };
 
 #endif // TESTNTP_H

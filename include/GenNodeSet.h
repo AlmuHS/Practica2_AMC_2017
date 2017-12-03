@@ -15,6 +15,7 @@ public:
     GenNodeSet();
     NodeSet genRandomNodeSet(int size);
     NodeSet genXSortedNodeSet(int size);
+    NodeSet GenNodeSetFromFile();
 };
 
 #endif // GENNODESET_H
