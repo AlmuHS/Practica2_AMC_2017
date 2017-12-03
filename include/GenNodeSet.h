@@ -8,16 +8,13 @@
 class GenNodeSet
 {
 
-public:
-    GenNodeSet(int size);
-    NodeSet genRandomNodeSet();
-
-
-protected:
-
 private:
-    int size;
     NodeSet _NS;
+
+public:
+    GenNodeSet();
+    NodeSet genRandomNodeSet(int size);
+    NodeSet genXSortedNodeSet(int size);
 };
 
 #endif // GENNODESET_H

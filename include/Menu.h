@@ -6,6 +6,7 @@ class Menu
 {
     public:
         Menu();
+        void clear();
         void MainMenu();
         void NTPMenu();
 
