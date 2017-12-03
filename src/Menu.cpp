@@ -59,7 +59,7 @@ void Menu::NTPMenu()
         NearestTrioProblem NTP(NS);
         std::pair<float, float> p1, p2, p3;
 
-        int mindistance = NTP.simpleSolution(p1, p2, p3);
+        double mindistance = NTP.simpleSolution(p1, p2, p3);
 
         std::cout<<"The minimal distance is: "<<mindistance<<std::endl
                 <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "
