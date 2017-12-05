@@ -65,14 +65,11 @@ void Menu::MainMenu()
 
         }
 
-        std::cout<<"\n\nPress ENTER to continue";
-        std::cin.clear();
-        std::cin.ignore();
+        std::cout<<"\n\nPress ENTER to continue\n";
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
         std::cin.ignore();
 
-        /*std::cin.seekg(std::ios_base::end);
-        std::cin.clear();
-        std::cin.ignore();*/
         clear();
     }
     while(option != 0);
@@ -102,21 +99,18 @@ void Menu::NTPMenu()
              <<"Select option: ";
     std::cin>>option2;
 
+    clear();
 
     switch(option2)
     {
     case 1:
-        clear();
 
         TNTP.testRandom();
         break;
 
     case 2:
 
-        clear();
-
         TNTP.testFromFile();
-
         break;
 
     };
