@@ -2,7 +2,10 @@
 #define NEARESTTRIOPROBLEM_H
 
 #include <utility>
-#include "NodeSet.h"
+#include <vector>
+
+using NodeSet = std::vector<std::pair<float, float> >;
+
 
 class NearestTrioProblem
 {

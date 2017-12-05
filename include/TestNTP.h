@@ -9,7 +9,6 @@
 class TestNTP
 {
 private:
-
     GenNodeSet GenNS;
 
 public:

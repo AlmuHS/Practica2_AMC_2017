@@ -25,16 +25,16 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
     //Auxiliar variables
     double distance1, distance2, distance3, sum_distance1, sum_distance2, sum_distance3, min;
 
-    for(int i = 0; i < _NS.getSize(); i++)
+    for(int i = 0; i < _NS.size(); i++)
     {
-        for(int j = i+1; j < _NS.getSize(); j++)
+        for(int j = i+1; j < _NS.size(); j++)
         {
-            for(int k = j+1; k < _NS.getSize(); k++)
+            for(int k = j+1; k < _NS.size(); k++)
             {
                 //Calculate three node combs
-                distance1 = calculateDistance(_NS.getPair(i), _NS.getPair(j));
-                distance2 = calculateDistance(_NS.getPair(i), _NS.getPair(k));
-                distance3 = calculateDistance(_NS.getPair(j), _NS.getPair(k));
+                distance1 = calculateDistance(_NS[i], _NS[j]);
+                distance2 = calculateDistance(_NS[i], _NS[k]);
+                distance3 = calculateDistance(_NS[j], _NS[k]);
 
                 //Sum the distance two to two
                 sum_distance1 = distance1 + distance2;
@@ -48,12 +48,13 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
                 if(sum_distance3 < min)
                     min = sum_distance3;
 
+                //Update absolute minimal value
                 if(min < min_distance)
                 {
                     min_distance = min;
-                    p1 = _NS.getPair(i);
-                    p2 = _NS.getPair(j);
-                    p3 = _NS.getPair(k);
+                    p1 = _NS[i];
+                    p2 = _NS[j];
+                    p3 = _NS[k];
                 }
 
             }//End k for
@@ -65,7 +66,7 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
 
 double NearestTrioProblem::dcSolution(NodeSet& solution)
 {
-    int min = 0, max = _NS.getSize();
+    int min = 0, max = _NS.size();
 
     if(max > 6)
     {

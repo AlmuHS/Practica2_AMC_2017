@@ -1,6 +1,7 @@
 #include "../include/GenNodeSet.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 GenNodeSet::GenNodeSet()
 {
@@ -15,8 +16,9 @@ NodeSet GenNodeSet::genRandomNodeSet(int size)
 
     for(int i = 0; i < size; i++)
     {
-        _NS.addPair(uni(rng), uni(rng));
+        _NS.push_back(std::make_pair(uni(rng), uni(rng)));
     }
+
 
     return _NS;
 }
@@ -24,21 +26,21 @@ NodeSet GenNodeSet::genRandomNodeSet(int size)
 NodeSet GenNodeSet::xSortNodeSet()
 {
 
-    for(int h = _NS.getSize() / 2; h > 0; h /= 2)
+    for(int h = _NS.size() / 2; h > 0; h /= 2)
     {
 
-        for(int i = h; i < _NS.getSize(); i++)
+        for(int i = h; i < _NS.size(); i++)
         {
             int j = i;
-            std::pair<float, float> elem = _NS.getPair(i);
+            std::pair<float, float> elem = _NS[i];
 
-            while(j >= h && elem.first < _NS.getPair(j-h).first)
+            while(j >= h && elem.first < _NS[j-h].first)
             {
-                _NS.swapPair(j, j-h);
+                std::swap(_NS[j], _NS[j-h]);
                 j -= h;
             }
 
-            _NS.getPair(j) = elem;
+            _NS[j] = elem;
         }
     }
     return _NS;
@@ -73,8 +75,17 @@ NodeSet GenNodeSet::genNodeSetFromFile(std::string filename)
             file >> y;
 
             //Add a new pair with line values
-            _NS.addPair(x, y);
+            _NS.push_back(std::make_pair(x,y));
         }
     }
     return _NS;
+}
+
+
+void GenNodeSet::showNodeSet()
+{
+    for(int i = 0; i < _NS.size(); i++)
+    {
+        std::cout<<"<"<<_NS[i].first<<", "<<_NS[i].second<<">"<<std::endl;
+    }
 }

@@ -18,7 +18,7 @@ void TestNTP::testRandom()
 
     NodeSet NS = GenNS.genRandomNodeSet(size);
 
-    NS.showNodeSet();
+    GenNS.showNodeSet();
 
     NearestTrioProblem NTP(NS);
     std::pair<float, float> p1, p2, p3;
@@ -60,7 +60,7 @@ void TestNTP::testFromFile()
     }
 
     NS = GenNS.genNodeSetFromFile(filename);
-    NS.showNodeSet();
+    GenNS.showNodeSet();
 
     NearestTrioProblem NTP(NS);
     double min_distance = NTP.simpleSolution(p1, p2, p3);

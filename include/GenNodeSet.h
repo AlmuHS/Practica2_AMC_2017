@@ -4,7 +4,7 @@
 #include <random>
 #include <string>
 
-#include "NodeSet.h"
+using NodeSet = std::vector<std::pair<float, float> >;
 
 class GenNodeSet
 {
@@ -23,6 +23,9 @@ public:
 
     //Generate a new NodeSet from a datafile
     NodeSet genNodeSetFromFile(std::string filename);
+
+    //Shows the contents of NodeSet by screen
+    void showNodeSet();
 };
 
 #endif // GENNODESET_H
