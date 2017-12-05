@@ -14,6 +14,9 @@ NodeSet GenNodeSet::genRandomNodeSet(int size)
     std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
     std::uniform_real_distribution<float> uni(0,5000); // guaranteed unbiased
 
+    //Remove all existing elements
+    _NS.clear();
+
     for(int i = 0; i < size; i++)
     {
         _NS.push_back(std::make_pair(uni(rng), uni(rng)));
@@ -52,6 +55,9 @@ NodeSet GenNodeSet::genNodeSetFromFile(std::string filename)
     std::string line = "";
     float x, y;
     int n = 1;
+
+    //Remove all existing elements
+    _NS.clear();
 
     //Skip file headers
     std::getline(file, line);

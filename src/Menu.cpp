@@ -116,7 +116,7 @@ void Menu::NTPMenu()
 
     case 2:
 
-        TNTP.testFromFile();
+        TNTP.testFromFile(option1);
         break;
 
     };

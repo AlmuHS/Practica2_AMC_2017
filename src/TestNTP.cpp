@@ -32,7 +32,7 @@ void TestNTP::testRandom()
 
 }
 
-void TestNTP::testFromFile()
+void TestNTP::testFromFile(int algorithm)
 {
     int option = 0;
     NodeSet NS;
@@ -63,7 +63,17 @@ void TestNTP::testFromFile()
     GenNS.showNodeSet();
 
     NearestTrioProblem NTP(NS);
-    double min_distance = NTP.simpleSolution(p1, p2, p3);
+
+    double min_distance;
+
+    if(algorithm == 1)
+        min_distance = NTP.simpleSolution(p1, p2, p3);
+    else{
+        GenNS.xSortNodeSet();
+        NearestTrioProblem NTP(NS);
+        NTP.dcSolution(p1, p2, p3);
+    }
+
 
     std::cout<<"The minimal distance is: "<<min_distance<<std::endl
              <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "

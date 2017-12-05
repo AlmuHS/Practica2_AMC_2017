@@ -15,7 +15,7 @@ public:
     TestNTP();
 
     void testRandom();
-    void testFromFile();
+    void testFromFile(int algorithm);
 };
 
 #endif // TESTNTP_H

@@ -64,12 +64,65 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
     return min_distance;
 }
 
-double NearestTrioProblem::dcSolution(NodeSet& solution)
+double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3){
+    NodeSet NS;
+    double inf = std::numeric_limits<double>::infinity();
+
+    double min_distance = dcSolution(NS, _NS, inf);
+
+    p1 = NS[0];
+    p2 = NS[1];
+    p3 = NS[2];
+
+    return min_distance;
+    //return inf;
+}
+
+void NearestTrioProblem::divide(const NodeSet &NS, NodeSet &left, NodeSet &right){
+
+    if(NS.size() < 5){
+        left = NodeSet(NS.begin(), NS.begin()+3);
+        right = NodeSet(NS.end()-3, NS.end());
+    }
+
+    else{
+        left = NodeSet(NS.begin(), NS.begin() + NS.size()/2);
+        right = NodeSet(NS.begin() + NS.size()/2 + 1, NS.end());
+    }
+}
+
+double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet &origin, double &min_distance)
 {
-    int min = 0, max = _NS.size();
+    if(origin.size() == 3){
 
-    if(max > 6)
-    {
+        double a = calculateDistance(origin[0], origin[1]);
+        double b = calculateDistance(origin[0], origin[2]);
+        double c = calculateDistance(origin[1], origin[2]);
 
+        double local_min = a + b;
+        if(a + c < local_min) local_min = a + c;
+        if(b + c < local_min) local_min = b + c;
+
+        if(local_min < min_distance){
+            min_distance = local_min;
+            solution.clear();
+            solution.push_back(origin[0]);
+            solution.push_back(origin[1]);
+            solution.push_back(origin[2]);
+        }
+
+        return min_distance;
+    }
+
+    else{
+        NodeSet left, right;
+
+        divide(origin, left, right);
+
+        double min_left = dcSolution(solution, left, min_distance);
+        double min_right = dcSolution(solution, right, min_distance);
+
+        if(min_left < min_right) return min_left;
+        else return min_right;
     }
 }
