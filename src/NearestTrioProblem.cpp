@@ -19,12 +19,10 @@ float NearestTrioProblem::calculateDistance(const std::pair<float, float>& p1, c
 double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
 
-    p1 = _NS.getPair(0);
-    p2 = _NS.getPair(1);
-    p3 = _NS.getPair(2);
-
+    //Absolute Minimal distance
     double min_distance = std::numeric_limits<double>::infinity();
 
+    //Auxiliar variables
     double distance1, distance2, distance3, sum_distance1, sum_distance2, sum_distance3, min;
 
     for(int i = 0; i < _NS.getSize(); i++)
