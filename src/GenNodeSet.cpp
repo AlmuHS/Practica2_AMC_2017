@@ -21,7 +21,8 @@ NodeSet GenNodeSet::genRandomNodeSet(int size)
     return _NS;
 }
 
-NodeSet GenNodeSet::xSortNodeSet(){
+NodeSet GenNodeSet::xSortNodeSet()
+{
 
     for(int h = _NS.getSize() / 2; h > 0; h /= 2)
     {
@@ -43,12 +44,14 @@ NodeSet GenNodeSet::xSortNodeSet(){
     return _NS;
 }
 
-NodeSet GenNodeSet::genNodeSetFromFile(std::string filename){
+NodeSet GenNodeSet::genNodeSetFromFile(std::string filename)
+{
     std::ifstream file(filename.c_str());
     std::string line = "";
     float x, y;
     int n = 1;
 
+    //Skip file headers
     std::getline(file, line);
     std::getline(file, line);
     std::getline(file, line);
@@ -56,11 +59,20 @@ NodeSet GenNodeSet::genNodeSetFromFile(std::string filename){
     std::getline(file, line);
     std::getline(file, line);
 
-    while(n != 0){
-        file >> n;
-        if(n != 0){
+    //Read file line to libe
+    while(n != 0)
+    {
+        file >> n; //line number
+
+        //If linenumber is not null, continues
+        if(n != 0)
+        {
+
+            //Read data from the line and copy in variables
             file >> x;
             file >> y;
+
+            //Add a new pair with line values
             _NS.addPair(x, y);
         }
     }

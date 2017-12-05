@@ -28,7 +28,8 @@ int NodeSet::getSize()
     return node_set.size();
 }
 
-void NodeSet::swapPair(int i, int j){
+void NodeSet::swapPair(int i, int j)
+{
     std::swap(node_set[i], node_set[j]);
 }
 
@@ -36,7 +37,7 @@ void NodeSet::showNodeSet()
 {
     for(int i = 0; i < node_set.size(); i++)
     {
-        std::cout<<"< "<<node_set[i].first<<", "<<node_set[i].second<<" >"<<std::endl;
+        std::cout<<"<"<<node_set[i].first<<", "<<node_set[i].second<<">"<<std::endl;
     }
 }
 

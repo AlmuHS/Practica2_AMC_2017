@@ -16,7 +16,7 @@ public:
 
     double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
-    double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+    double dcSolution(NodeSet& solution);
 
 
 

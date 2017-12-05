@@ -48,6 +48,7 @@ void Menu::MainMenu()
                  <<"----------------------------\n"
                  <<"0. Exit\n"
                  <<"1. Test Nearest Trio Problem\n"
+                 <<"2. Test Minimal Connection Problem\n"
                  <<"Select option: ";
         std::cin>>option;
 
@@ -63,7 +64,12 @@ void Menu::MainMenu()
             NTPMenu();
             break;
 
+        case 2:
+
+            break;
+
         }
+
 
         std::cout<<"\n\nPress ENTER to continue\n";
 

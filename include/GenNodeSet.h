@@ -14,8 +14,14 @@ private:
 
 public:
     GenNodeSet();
+
+    //Generate a new NodeSet with random elements
     NodeSet genRandomNodeSet(int size);
+
+    //Sort the NodeSet using x coordinate, using ShellSort
     NodeSet xSortNodeSet();
+
+    //Generate a new NodeSet from a datafile
     NodeSet genNodeSetFromFile(std::string filename);
 };
 
