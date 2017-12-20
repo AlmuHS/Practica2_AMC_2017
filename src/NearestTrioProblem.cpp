@@ -126,7 +126,7 @@ double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& 
     std::pair<float, float> midPoint = NSX[mid];
 
     NodeSet NyL(mid + 1);
-    NodeSet NyR(n - mid + 1);
+    NodeSet NyR(n - mid - 1);
 
 
     for (int i = 0; i < n; i++) {
@@ -148,11 +148,15 @@ double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& 
     NodeSet strip(n);
 
     int j = 0;
-    for (int i = 0; i < n; i++)
-        if (abs(NSY.at(i).first - midPoint.first) < dmin){
+    for (int i = 0; i < n; i++){
+        double nmin = abs(NSY.at(i).first - midPoint.first);
+
+        if (nmin < dmin){
             strip.at(j) = NSY.at(i);
             j++;
         }
+
+    }
 
 
     // Find the closest points in strip.  Return the minimum of d and closest
