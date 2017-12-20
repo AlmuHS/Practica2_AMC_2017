@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>
 #include <limits>
+#include <iostream>
 
 NearestTrioProblem::NearestTrioProblem(NodeSet NS): _NS(NS)
 {
@@ -46,15 +47,12 @@ double NearestTrioProblem::simpleSolution(NodeSet _NS, std::pair<float, float>& 
     //Absolute Minimal distance
     double min_distance = std::numeric_limits<double>::infinity();
 
-    //Auxiliar variables
-    double min;
-
     for(int i = 0; i < _NS.size(); i++) {
         for(int j = i+1; j < _NS.size(); j++) {
             for(int k = j+1; k < _NS.size(); k++) {
 
                 //Calculate minimal distance in the Trio
-                min = calculateMin(_NS[i], _NS[j], _NS[k]);
+                double min = calculateMin(_NS[i], _NS[j], _NS[k]);
 
                 //Update absolute minimal value
                 if(min < min_distance) {
@@ -79,7 +77,6 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
 double NearestTrioProblem::stripClosest(NodeSet strip, double d)
 {
     double min = d;  // Initialize the minimum distance as d
-    double new_min;
 
     // Pick all points one by one and try the next points till the difference
     // between y coordinates is smaller than d.
@@ -87,7 +84,7 @@ double NearestTrioProblem::stripClosest(NodeSet strip, double d)
     for (int i = 0; i < strip.size(); ++i){
         for(int j = i + 1; j < strip.size(); ++j){
             for (int k = j+1; k < strip.size() && (strip[k].second - strip[j].second - strip[i].second) < min; ++k) {
-                new_min = calculateMin(strip[i], strip[j], strip[k]);
+                double new_min = calculateMin(strip[i], strip[j], strip[k]);
                 if (new_min < min)
                     min = new_min;
             }
@@ -145,23 +142,25 @@ double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& 
     if(dr < dmin)
         dmin = dr;
 
+        std::cout<<dmin<<std::endl;
+
     NodeSet strip(n);
 
-    int j = 0;
     for (int i = 0; i < n; i++){
         double nmin = abs(NSY.at(i).first - midPoint.first);
 
         if (nmin < dmin){
-            strip.at(j) = NSY.at(i);
-            j++;
+            strip.push_back(NSY.at(i));
         }
 
     }
 
-
     // Find the closest points in strip.  Return the minimum of d and closest
     // distance is strip[]
     double new_min = stripClosest(strip, dmin);
+
+    std::cout<<new_min<<std::endl;
+
     if(new_min < dmin){
         solution = strip;
         return new_min;

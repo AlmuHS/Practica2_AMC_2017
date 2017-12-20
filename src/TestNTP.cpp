@@ -69,7 +69,6 @@ void TestNTP::testFromFile(int algorithm)
     if(algorithm == 1)
         min_distance = NTP.simpleSolution(p1, p2, p3);
     else{
-        NearestTrioProblem NTP(NS);
         min_distance = NTP.dcSolution(p1, p2, p3);
     }
 
