@@ -1,4 +1,5 @@
 #include "../include/NearestTrioProblem.h"
+#include "../include/GenNodeSet.h"
 
 #include <cmath>
 #include <vector>
@@ -39,7 +40,7 @@ double NearestTrioProblem::calculateMin(const std::pair<float, float>& p1, const
     return min;
 }
 
-double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+double NearestTrioProblem::simpleSolution(NodeSet _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
 
     //Absolute Minimal distance
@@ -51,6 +52,7 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
     for(int i = 0; i < _NS.size(); i++) {
         for(int j = i+1; j < _NS.size(); j++) {
             for(int k = j+1; k < _NS.size(); k++) {
+
                 //Calculate minimal distance in the Trio
                 min = calculateMin(_NS[i], _NS[j], _NS[k]);
 
@@ -69,50 +71,95 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
     return min_distance;
 }
 
-double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
-    NodeSet NS;
-    double inf = std::numeric_limits<double>::infinity();
-
-    double min_distance = dcSolution(NS, inf, 0, _NS.size());
-
-    p1 = NS[0];
-    p2 = NS[1];
-    p3 = NS[2];
-
-    return min_distance;
+    simpleSolution(this->_NS, p1, p2, p3);
 }
 
-double NearestTrioProblem::dcSolution(NodeSet& solution, double &min_distance, int min, int max)
+double NearestTrioProblem::stripClosest(NodeSet strip, double d)
 {
-    if(max - min == 3) {
-        double new_min = calculateMin(_NS[min], _NS[min+1], _NS[max]);
+    double min = d;  // Initialize the minimum distance as d
+    double new_min;
 
-        if(new_min < min_distance) {
-            min_distance = new_min;
-            return new_min;
+    // Pick all points one by one and try the next points till the difference
+    // between y coordinates is smaller than d.
+    // This is a proven fact that this loop runs at most 6 times
+    for (int i = 0; i < strip.size(); ++i){
+        for(int j = i + 1; j < strip.size(); ++j){
+            for (int k = j+1; k < strip.size() && (strip[k].second - strip[j].second - strip[i].second) < min; ++k) {
+                new_min = calculateMin(strip[i], strip[j], strip[k]);
+                if (new_min < min)
+                    min = new_min;
+            }
         }
+    }
+
+
+    return min;
+}
+
+double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+{
+    NodeSet NSortedX, NSortedY, solution(3, std::make_pair(1000, 1000));
+    GenNodeSet GenNS(_NS);
+
+    NSortedX = GenNS.xSortNodeSet();
+    NSortedY = GenNS.ySortNodeSet();
+
+    double sol = dcSolution(solution, NSortedX, NSortedY, _NS.size()/sizeof(_NS[0]));
+
+    p1 = solution[0];
+    p2 = solution[1];
+    p2 = solution[2];
+
+    return sol;
+
+}
+
+double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& NSY, int n)
+{
+    if(n <= 6)
+        return simpleSolution(NSX, solution[0], solution[1], solution[2]);
+    else if (n < 3) return std::numeric_limits<double>::infinity();
+
+    int mid = n/2;
+    std::pair<float, float> midPoint = NSX[mid];
+
+    NodeSet NyL(mid + 1);
+    NodeSet NyR(n - mid + 1);
+
+    int li = 0, ri = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (NSY[i].first <= midPoint.first)
+            NyL[li++] = NSY[i];
         else
-            return min_distance;
-    }
-    else if(max - min < 3) {
-        return std::numeric_limits<double>::infinity();
+            NyR[ri++] = NSY[i];
     }
 
-    else if(max - min >= 6) {
-        double new_min_left = dcSolution(solution, min_distance, min, max/2);
-        double new_min_right = dcSolution(solution, min_distance, max/2 + 1, max - 1);
+    NodeSet aux(NSX.begin() + mid, NSX.end());
 
-        if(new_min_left < min_distance)
-            min_distance = new_min_left;
-        if(new_min_right < min_distance)
-            min_distance = new_min_right;
+    double dl = dcSolution(solution, NSX, NyL, mid);
+    double dr = dcSolution(solution, aux, NyR, n-mid);
 
-        return min_distance;
+    float dmin = dl;
+    if(dr < dmin)
+        dmin = dr;
+
+    NodeSet strip;
+
+    int j = 0;
+    for (int i = 0; i < n; i++)
+        if (abs(NSY[i].first - midPoint.first) < dmin)
+            strip[j] = NSY[i], j++;
+
+    // Find the closest points in strip.  Return the minimum of d and closest
+    // distance is strip[]
+    double new_min = stripClosest(strip, dmin);
+    if(new_min < dmin){
+        solution = strip;
+        return new_min;
     }
-    else {
-
-    }
-
+    else return dmin;
 
 }

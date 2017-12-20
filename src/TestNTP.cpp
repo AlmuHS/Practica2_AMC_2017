@@ -70,6 +70,7 @@ void TestNTP::testFromFile(int algorithm)
         min_distance = NTP.simpleSolution(p1, p2, p3);
     else{
         GenNS.xSortNodeSet();
+
         NearestTrioProblem NTP(NS);
         min_distance = NTP.dcSolution(p1, p2, p3);
     }
