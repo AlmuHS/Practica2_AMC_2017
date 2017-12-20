@@ -128,13 +128,12 @@ double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& 
     NodeSet NyL(mid + 1);
     NodeSet NyR(n - mid + 1);
 
-    int li = 0, ri = 0;
 
     for (int i = 0; i < n; i++) {
         if (NSY[i].first <= midPoint.first)
-            NyL[li++] = NSY[i];
+            NyL.push_back(NSY[i]);
         else
-            NyR[ri++] = NSY[i];
+            NyR.push_back(NSY[i]);
     }
 
     NodeSet aux(NSX.begin() + mid, NSX.end());
