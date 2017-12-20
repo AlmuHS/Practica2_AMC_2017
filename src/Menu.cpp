@@ -2,6 +2,7 @@
 #include "../include/TestNTP.h"
 
 #include <iostream>
+#include <limits>
 
 Menu::Menu()
 {
@@ -85,7 +86,6 @@ void Menu::MainMenu()
 void Menu::NTPMenu()
 {
     int option1 = 0, option2 = 0;
-    int size;
     TestNTP TNTP;
 
     std::cout<<"Nearest Trio Problem\n"

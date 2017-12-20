@@ -16,6 +16,29 @@ float NearestTrioProblem::calculateDistance(const std::pair<float, float>& p1, c
 }
 
 
+double NearestTrioProblem::calculateMin(const std::pair<float, float>& p1, const std::pair<float, float>& p2, const std::pair<float, float>& p3)
+{
+
+    //Calculate three node combs
+    double distance1 = calculateDistance(p1, p2);
+    double distance2 = calculateDistance(p1, p3);
+    double distance3 = calculateDistance(p2, p3);
+
+    //Sum the distance two to two
+    double sum_distance1 = distance1 + distance2;
+    double sum_distance2 = distance1 + distance3;
+    double sum_distance3 = distance2 + distance3;
+
+    //Search the minimal of three sum_distance
+    double min = sum_distance1;
+    if(sum_distance2 < min)
+        min = sum_distance2;
+    if(sum_distance3 < min)
+        min = sum_distance3;
+
+    return min;
+}
+
 double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
 
@@ -23,34 +46,16 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
     double min_distance = std::numeric_limits<double>::infinity();
 
     //Auxiliar variables
-    double distance1, distance2, distance3, sum_distance1, sum_distance2, sum_distance3, min;
+    double min;
 
-    for(int i = 0; i < _NS.size(); i++)
-    {
-        for(int j = i+1; j < _NS.size(); j++)
-        {
-            for(int k = j+1; k < _NS.size(); k++)
-            {
-                //Calculate three node combs
-                distance1 = calculateDistance(_NS[i], _NS[j]);
-                distance2 = calculateDistance(_NS[i], _NS[k]);
-                distance3 = calculateDistance(_NS[j], _NS[k]);
-
-                //Sum the distance two to two
-                sum_distance1 = distance1 + distance2;
-                sum_distance2 = distance1 + distance3;
-                sum_distance3 = distance2 + distance3;
-
-                //Search the minimal of three sum_distance
-                min = sum_distance1;
-                if(sum_distance2 < min)
-                    min = sum_distance2;
-                if(sum_distance3 < min)
-                    min = sum_distance3;
+    for(int i = 0; i < _NS.size(); i++) {
+        for(int j = i+1; j < _NS.size(); j++) {
+            for(int k = j+1; k < _NS.size(); k++) {
+                //Calculate minimal distance in the Trio
+                min = calculateMin(_NS[i], _NS[j], _NS[k]);
 
                 //Update absolute minimal value
-                if(min < min_distance)
-                {
+                if(min < min_distance) {
                     min_distance = min;
                     p1 = _NS[i];
                     p2 = _NS[j];
@@ -64,65 +69,50 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
     return min_distance;
 }
 
-double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3){
+double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+{
     NodeSet NS;
     double inf = std::numeric_limits<double>::infinity();
 
-    double min_distance = dcSolution(NS, _NS, inf);
+    double min_distance = dcSolution(NS, inf, 0, _NS.size());
 
     p1 = NS[0];
     p2 = NS[1];
     p3 = NS[2];
 
     return min_distance;
-    //return inf;
 }
 
-void NearestTrioProblem::divide(const NodeSet &NS, NodeSet &left, NodeSet &right){
-
-    if(NS.size() < 5){
-        left = NodeSet(NS.begin(), NS.begin()+3);
-        right = NodeSet(NS.end()-3, NS.end());
-    }
-
-    else{
-        left = NodeSet(NS.begin(), NS.begin() + NS.size()/2);
-        right = NodeSet(NS.begin() + NS.size()/2 + 1, NS.end());
-    }
-}
-
-double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet &origin, double &min_distance)
+double NearestTrioProblem::dcSolution(NodeSet& solution, double &min_distance, int min, int max)
 {
-    if(origin.size() == 3){
+    if(max - min == 3) {
+        double new_min = calculateMin(_NS[min], _NS[min+1], _NS[max]);
 
-        double a = calculateDistance(origin[0], origin[1]);
-        double b = calculateDistance(origin[0], origin[2]);
-        double c = calculateDistance(origin[1], origin[2]);
-
-        double local_min = a + b;
-        if(a + c < local_min) local_min = a + c;
-        if(b + c < local_min) local_min = b + c;
-
-        if(local_min < min_distance){
-            min_distance = local_min;
-            solution.clear();
-            solution.push_back(origin[0]);
-            solution.push_back(origin[1]);
-            solution.push_back(origin[2]);
+        if(new_min < min_distance) {
+            min_distance = new_min;
+            return new_min;
         }
+        else
+            return min_distance;
+    }
+    else if(max - min < 3) {
+        return std::numeric_limits<double>::infinity();
+    }
+
+    else if(max - min >= 6) {
+        double new_min_left = dcSolution(solution, min_distance, min, max/2);
+        double new_min_right = dcSolution(solution, min_distance, max/2 + 1, max - 1);
+
+        if(new_min_left < min_distance)
+            min_distance = new_min_left;
+        if(new_min_right < min_distance)
+            min_distance = new_min_right;
 
         return min_distance;
     }
+    else {
 
-    else{
-        NodeSet left, right;
-
-        divide(origin, left, right);
-
-        double min_left = dcSolution(solution, left, min_distance);
-        double min_right = dcSolution(solution, right, min_distance);
-
-        if(min_left < min_right) return min_left;
-        else return min_right;
     }
+
+
 }

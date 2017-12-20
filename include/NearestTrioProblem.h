@@ -17,13 +17,13 @@ public:
 
     float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
 
+    double calculateMin(const std::pair<float, float>& p1, const std::pair<float, float>& p2, const std::pair<float, float>& p3);
+
     double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
-    void divide(const NodeSet &NS, NodeSet &left, NodeSet &right);
-
-    double dcSolution(NodeSet& solution, NodeSet &origin, double &min_distance);
+    double dcSolution(NodeSet& solution, double &min_distance, int min, int max);
 
 
 
