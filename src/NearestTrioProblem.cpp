@@ -131,9 +131,9 @@ double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& 
 
     for (int i = 0; i < n; i++) {
         if (NSY[i].first <= midPoint.first)
-            NyL.push_back(NSY[i]);
+            NyL.push_back(NSY.at(i));
         else
-            NyR.push_back(NSY[i]);
+            NyR.push_back(NSY.at(i));
     }
 
     NodeSet aux(NSX.begin() + mid, NSX.end());
@@ -145,12 +145,15 @@ double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& 
     if(dr < dmin)
         dmin = dr;
 
-    NodeSet strip;
+    NodeSet strip(n);
 
     int j = 0;
     for (int i = 0; i < n; i++)
-        if (abs(NSY[i].first - midPoint.first) < dmin)
-            strip[j] = NSY[i], j++;
+        if (abs(NSY.at(i).first - midPoint.first) < dmin){
+            strip.at(j) = NSY.at(i);
+            j++;
+        }
+
 
     // Find the closest points in strip.  Return the minimum of d and closest
     // distance is strip[]
