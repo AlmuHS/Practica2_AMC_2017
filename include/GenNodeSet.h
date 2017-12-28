@@ -21,32 +21,39 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <random>
 #include <string>
 
-using NodeSet = std::vector<std::pair<float, float> >;
+template<typename T0, typename T1 = T0>
+using NodeSet = std::vector<std::pair<T0, T1> >;
+
+//using NodeSet = std::vector<std::pair<float, float> >;
 
 class GenNodeSet
 {
 
 private:
-    NodeSet _NS;
+    NodeSet<float> _NS;
 
 public:
     GenNodeSet();
-    GenNodeSet(NodeSet NS);
+
+    template<typename T0, typename T1 = T0>
+    GenNodeSet(NodeSet<T0> NS);
 
     //Generate a new NodeSet with random elements
-    NodeSet genRandomNodeSet(int size);
+    void genRandomNodeSet(NodeSet<float>& NS, int size);
 
     //Sort the NodeSet using x coordinate, using ShellSort
-    NodeSet xSortNodeSet();
+    NodeSet<float> xSortNodeSet();
 
     //Sort the NodeSet using y coordinate, using ShellSort
-    NodeSet ySortNodeSet();
+    NodeSet<float> ySortNodeSet();
 
     //Generate a new NodeSet from a datafile
-    NodeSet genNodeSetFromFile(std::string filename);
+    template<typename T0, typename T1 = T0>
+    void genNodeSetFromFile(NodeSet<T0>& NS, std::string filename);
 
     //Shows the contents of NodeSet by screen
-    void showNodeSet();
+    template<typename T0, typename T1 = T0>
+    void showNodeSet(NodeSet<T0>& NS);
 };
 
 #endif // GENNODESET_H

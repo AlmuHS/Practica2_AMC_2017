@@ -33,9 +33,12 @@ void TestNTP::testRandom(int algorithm)
     std::cout<<"Set size: ";
     std::cin>>size;
 
-    NodeSet NS = GenNS.genRandomNodeSet(size);
+    GenNodeSet GenNS;
 
-    GenNS.showNodeSet();
+    NodeSet<float> NS;
+    GenNS.genRandomNodeSet(NS, size);
+
+    GenNS.showNodeSet(NS);
 
     NearestTrioProblem NTP(NS);
     std::pair<float, float> p1, p2, p3;
@@ -56,7 +59,7 @@ void TestNTP::testRandom(int algorithm)
 void TestNTP::testFromFile(int algorithm)
 {
     int option = 0;
-    NodeSet NS;
+    NodeSet<float> NS;
     std::string filename = "";
 
     std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};
@@ -80,8 +83,10 @@ void TestNTP::testFromFile(int algorithm)
         filename = "data/" + filename + "/" + filename;
     }
 
-   NS = GenNS.genNodeSetFromFile(filename);
-   GenNS.showNodeSet();
+    GenNodeSet GenNS;
+
+    GenNS.genNodeSetFromFile(NS, filename);
+    GenNS.showNodeSet(NS);
 
    NearestTrioProblem NTP(NS);
 

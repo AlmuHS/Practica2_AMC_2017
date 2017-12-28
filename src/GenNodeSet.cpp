@@ -25,29 +25,27 @@ GenNodeSet::GenNodeSet()
     //ctor
 }
 
-GenNodeSet::GenNodeSet(NodeSet NS){
+template<typename T0, typename T1 = T0>
+GenNodeSet::GenNodeSet(NodeSet<T0> NS){
     _NS = NS;
 }
 
-NodeSet GenNodeSet::genRandomNodeSet(int size)
+void GenNodeSet::genRandomNodeSet(NodeSet<float>& NS, int size)
 {
     std::random_device rd;     // only used once to initialise (seed) engine
     std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
     std::uniform_real_distribution<float> uni(0,5000); // guaranteed unbiased
 
-    //Remove all existing elements
-    _NS.clear();
-
     for(int i = 0; i < size; i++)
     {
-        _NS.push_back(std::make_pair(uni(rng), uni(rng)));
+        NS.push_back(std::make_pair(uni(rng), uni(rng)));
     }
 
 
-    return _NS;
+    this->_NS = NS;
 }
 
-NodeSet GenNodeSet::xSortNodeSet()
+NodeSet<float> GenNodeSet::xSortNodeSet()
 {
 
     for(int h = _NS.size() / 2; h > 0; h /= 2)
@@ -70,7 +68,7 @@ NodeSet GenNodeSet::xSortNodeSet()
     return _NS;
 }
 
-NodeSet GenNodeSet::ySortNodeSet()
+NodeSet<float> GenNodeSet::ySortNodeSet()
 {
 
     for(int h = _NS.size() / 2; h > 0; h /= 2)
@@ -93,15 +91,14 @@ NodeSet GenNodeSet::ySortNodeSet()
     return _NS;
 }
 
-NodeSet GenNodeSet::genNodeSetFromFile(std::string filename)
+template<typename T0, typename T1 = T0>
+void GenNodeSet::genNodeSetFromFile(NodeSet<T0> &NS, std::string filename)
 {
+
     std::ifstream file(filename.c_str());
     std::string line = "";
-    float x, y;
+    T0 x, y;
     int n = 1;
-
-    //Remove all existing elements
-    _NS.clear();
 
     //Skip file headers
     std::getline(file, line);
@@ -125,17 +122,16 @@ NodeSet GenNodeSet::genNodeSetFromFile(std::string filename)
             file >> y;
 
             //Add a new pair with line values
-            _NS.push_back(std::make_pair(x,y));
+            NS.push_back(std::make_pair(x,y));
         }
     }
-    return _NS;
 }
 
-
-void GenNodeSet::showNodeSet()
+template<typename T0, typename T1 = T0>
+void GenNodeSet::showNodeSet(NodeSet<T0>& NS)
 {
-    for(int i = 0; i < _NS.size(); i++)
+    for(int i = 0; i < NS.size(); i++)
     {
-        std::cout<<"<"<<_NS[i].first<<", "<<_NS[i].second<<">"<<std::endl;
+        std::cout<<"<"<<NS[i].first<<", "<<NS[i].second<<">"<<std::endl;
     }
 }

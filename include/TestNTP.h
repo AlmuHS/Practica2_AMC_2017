@@ -21,12 +21,12 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "../include/GenNodeSet.h"
 #include "../include/NearestTrioProblem.h"
 
-
+template<typename T0, typename T1 = T0>
+using NodeSet = std::vector<std::pair<T0, T1> >;
 
 class TestNTP
 {
 private:
-    GenNodeSet GenNS;
 
 public:
     TestNTP();
