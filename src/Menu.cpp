@@ -92,6 +92,7 @@ void Menu::MainMenu()
         std::cout<<"\n\nPress ENTER to continue\n";
 
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+        std::cin.ignore();
 
         clear();
     }

@@ -20,6 +20,8 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include <random>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 template<typename T0, typename T1 = T0>
 using NodeSet = std::vector<std::pair<T0, T1> >;
@@ -34,8 +36,8 @@ private:
 public:
     GenNodeSet();
 
-    template<typename T>
-    GenNodeSet(NodeSet<T> NS);
+    template<typename T0>
+    GenNodeSet(NodeSet<T0> NS);
 
     //Generate a new NodeSet with random elements
     void genRandomNodeSet(NodeSet<float>& NS, int size);
@@ -47,12 +49,52 @@ public:
     NodeSet<float> ySortNodeSet();
 
     //Generate a new NodeSet from a datafile
-    template<typename T>
-    void genNodeSetFromFile(NodeSet<T>& NS, std::string filename);
+    template<typename T0>
+    void genNodeSetFromFile(NodeSet<T0>& NS, std::string filename)
+    {
+        std::ifstream file(filename.c_str());
+        std::string line = "";
+        T0 x, y;
+        int n = 1;
+
+        //Skip file headers
+        std::getline(file, line);
+        std::getline(file, line);
+        std::getline(file, line);
+        std::getline(file, line);
+        std::getline(file, line);
+        std::getline(file, line);
+
+        //Read file line to libe
+        while(n != 0)
+        {
+            file >> n; //line number
+
+            //If linenumber is not null, continues
+            if(n != 0)
+            {
+
+                //Read data from the line and copy in variables
+                file >> x;
+                file >> y;
+
+                //Add a new pair with line values
+                NS.push_back(std::make_pair(x,y));
+            }
+        }
+
+        this->_NS = NS;
+    }
 
     //Shows the contents of NodeSet by screen
     template<typename T0>
-    void showNodeSet(NodeSet<T0>& NS);
+    void showNodeSet(const NodeSet<T0>& NS)
+    {
+        for(int i = 0; i < NS.size(); i++)
+        {
+            std::cout<<"<"<<NS[i].first<<", "<<NS[i].second<<">"<<std::endl;
+        }
+    }
 };
 
 #endif // GENNODESET_H
