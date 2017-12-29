@@ -21,30 +21,30 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <utility>
 #include <vector>
 
-using NodeSet = std::vector<std::pair<float, float> >;
+//using NodeSet = std::vector<std::pair<float, float> >;
 
+template<typename T0, typename T1 = T0>
+using NodeSet = std::vector<std::pair<T0, T1> >;
 
 class NearestTrioProblem
 {
 private:
-    NodeSet _NS;
+    NodeSet<float> _NS;
 
 public:
-    NearestTrioProblem(NodeSet NS);
+    NearestTrioProblem(NodeSet<float> NS);
 
     float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
 
     double calculateMin(const std::pair<float, float>& p1, const std::pair<float, float>& p2, const std::pair<float, float>& p3);
 
-    double stripClosest(NodeSet strip, double d);
-
     double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
-    double simpleSolution(NodeSet _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+    double simpleSolution(NodeSet<float> _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
-    double dcSolution(NodeSet& solution, NodeSet& NSX, NodeSet& NSY, int n);
+    double dcSolution(NodeSet<float>& solution, NodeSet<float>& NSX, NodeSet<float>& NSY, int n);
 
 };
 

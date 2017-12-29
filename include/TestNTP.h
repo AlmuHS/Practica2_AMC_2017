@@ -22,11 +22,9 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "../include/NearestTrioProblem.h"
 
 
-
 class TestNTP
 {
 private:
-    GenNodeSet GenNS;
 
 public:
     TestNTP();
