@@ -17,6 +17,9 @@ class MinimalConectionProblem
         MinimalConectionProblem(const MinimalConectionProblem& other);
 
         int calculateEuclideanDistance(std::pair<int, int> a, std::pair<int, int> b);
+
+        int PrimSolution();
+        int KruskalSolution();
 };
 
 #endif // MINIMALCONECTIONPROBLEM_H

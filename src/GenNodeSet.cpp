@@ -25,7 +25,7 @@ GenNodeSet::GenNodeSet()
     //ctor
 }
 
-template<typename T0, typename T1 = T0>
+template<typename T0>
 GenNodeSet::GenNodeSet(NodeSet<T0> NS){
     _NS = NS;
 }
@@ -91,13 +91,13 @@ NodeSet<float> GenNodeSet::ySortNodeSet()
     return _NS;
 }
 
-template<typename T0, typename T1 = T0>
-void GenNodeSet::genNodeSetFromFile(NodeSet<T0> &NS, std::string filename)
+template<typename T>
+void GenNodeSet::genNodeSetFromFile(NodeSet<T> &NS, std::string filename)
 {
 
     std::ifstream file(filename.c_str());
     std::string line = "";
-    T0 x, y;
+    T x, y;
     int n = 1;
 
     //Skip file headers
@@ -125,9 +125,11 @@ void GenNodeSet::genNodeSetFromFile(NodeSet<T0> &NS, std::string filename)
             NS.push_back(std::make_pair(x,y));
         }
     }
+
+    this->_NS = NS;
 }
 
-template<typename T0, typename T1 = T0>
+template<typename T0>
 void GenNodeSet::showNodeSet(NodeSet<T0>& NS)
 {
     for(int i = 0; i < NS.size(); i++)

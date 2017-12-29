@@ -24,7 +24,6 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 template<typename T0, typename T1 = T0>
 using NodeSet = std::vector<std::pair<T0, T1> >;
 
-//using NodeSet = std::vector<std::pair<float, float> >;
 
 class GenNodeSet
 {
@@ -35,8 +34,8 @@ private:
 public:
     GenNodeSet();
 
-    template<typename T0, typename T1 = T0>
-    GenNodeSet(NodeSet<T0> NS);
+    template<typename T>
+    GenNodeSet(NodeSet<T> NS);
 
     //Generate a new NodeSet with random elements
     void genRandomNodeSet(NodeSet<float>& NS, int size);
@@ -48,11 +47,11 @@ public:
     NodeSet<float> ySortNodeSet();
 
     //Generate a new NodeSet from a datafile
-    template<typename T0, typename T1 = T0>
-    void genNodeSetFromFile(NodeSet<T0>& NS, std::string filename);
+    template<typename T>
+    void genNodeSetFromFile(NodeSet<T>& NS, std::string filename);
 
     //Shows the contents of NodeSet by screen
-    template<typename T0, typename T1 = T0>
+    template<typename T0>
     void showNodeSet(NodeSet<T0>& NS);
 };
 
