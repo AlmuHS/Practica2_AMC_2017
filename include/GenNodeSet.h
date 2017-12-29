@@ -18,10 +18,10 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #ifndef GENNODESET_H
 #define GENNODESET_H
 
-#include <random>
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 template<typename T0, typename T1 = T0>
 using NodeSet = std::vector<std::pair<T0, T1> >;

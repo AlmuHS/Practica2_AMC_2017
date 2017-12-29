@@ -17,8 +17,9 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "../include/GenNodeSet.h"
 #include <iostream>
-#include <fstream>
 #include <algorithm>
+#include <random>
+
 
 GenNodeSet::GenNodeSet()
 {
