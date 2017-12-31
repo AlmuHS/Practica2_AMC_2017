@@ -24,19 +24,29 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 template<typename T0, typename T1 = T0>
 using NodeSet = std::vector<std::pair<T0, T1> >;
 
+struct edge{
+    int a;
+    int b;
+
+    int distance;
+};
+
 class MinimalConectionProblem
 {
     private:
         NodeSet<int> _NS;
+        std::vector<edge> EdgeSet;
 
     public:
-        MinimalConectionProblem();
+        MinimalConectionProblem(const NodeSet<int>& NS);
         MinimalConectionProblem(const MinimalConectionProblem& other);
 
         int calculateEuclideanDistance(std::pair<int, int> a, std::pair<int, int> b);
+        void genEdgeSet();
 
-        int PrimSolution();
-        int KruskalSolution();
+
+        int primSolution();
+        int kruskalSolution();
 };
 
 #endif // MINIMALCONECTIONPROBLEM_H
