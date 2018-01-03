@@ -17,6 +17,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "../include/Menu.h"
 #include "../include/TestNTP.h"
+#include "../include/TestMCP.h"
 
 #include <iostream>
 #include <limits>
@@ -137,4 +138,23 @@ void Menu::NTPMenu()
         break;
 
     };
+}
+
+void Menu::MCPMenu(){
+    int option;
+
+    TestMCP TMCP;
+
+    std::cout<<"Minimal Connection Problem\n"
+             <<"-----------------------------\n"
+             <<"Select algorithm: \n"
+             <<"1. Prim\n"
+             <<"2. Kruskal\n"
+             <<"Select option: ";
+    std::cin>>option;
+
+    clear();
+
+    TMCP.testAlgorithm(option);
+
 }

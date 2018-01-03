@@ -26,6 +26,7 @@ class Menu
         void clear();
         void MainMenu();
         void NTPMenu();
+        void MCPMenu();
 
     protected:
 

@@ -85,7 +85,7 @@ public:
             }
         }
 
-        this->_NS = NS;
+        //this->_NS = NS;
     }
 
     //Shows the contents of NodeSet by screen

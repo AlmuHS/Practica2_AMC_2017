@@ -126,4 +126,6 @@ double NearestTrioProblem::dcSolution(NodeSet<float>& solution, NodeSet<float>& 
 
     }
 
+    return 0;
+
 }
