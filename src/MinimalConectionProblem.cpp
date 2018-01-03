@@ -20,6 +20,12 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <cmath>
 #include <utility>
 
+//overloaded operator, needed to std::set
+bool operator<(const edge& e1, const edge& e2){
+    return(e1.distance < e2.distance);
+}
+
+
 MinimalConectionProblem::MinimalConectionProblem(const NodeSet<int>& NS): _NS(NS)
 {
     //ctor

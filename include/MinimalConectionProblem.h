@@ -32,10 +32,6 @@ struct edge{
     int distance;
 };
 
-//overloaded operator, needed to std::set
-bool operator<(const edge& e1, const edge& e2){
-    return(e1.distance < e2.distance);
-}
 
 
 class MinimalConectionProblem
