@@ -26,11 +26,6 @@ GenNodeSet::GenNodeSet()
     //ctor
 }
 
-template<typename T0>
-GenNodeSet::GenNodeSet(NodeSet<T0> NS){
-    _NS = NS;
-}
-
 void GenNodeSet::genRandomNodeSet(NodeSet<float>& NS, int size)
 {
     std::random_device rd;     // only used once to initialise (seed) engine

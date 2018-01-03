@@ -31,20 +31,26 @@ class NearestTrioProblem
 private:
     NodeSet<float> _NS;
 
-public:
-    NearestTrioProblem(NodeSet<float> NS);
-
+    //Calculate the distance between two nodes
     float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
 
+    //Calculate the minimal path to connect 3 nodes
     double calculateMin(const std::pair<float, float>& p1, const std::pair<float, float>& p2, const std::pair<float, float>& p3);
 
+public:
+    NearestTrioProblem(const NodeSet<float>& NS);
+
+    //Exhaustive algorithm
     double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
+    //Call to exhaustive algoritm without parameters
     double simpleSolution(NodeSet<float> _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
+    //Call to Divide and Conquer algorithm
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
-    double dcSolution(NodeSet<float>& solution, NodeSet<float>& NSX, NodeSet<float>& NSY, int n);
+    //Divide and Conquer recursive method
+    double dcSolution(NodeSet<float>& solution, NodeSet<float>& NSX, int n);
 
 };
 

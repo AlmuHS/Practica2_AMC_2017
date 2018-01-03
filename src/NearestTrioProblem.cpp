@@ -23,7 +23,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <limits>
 #include <iostream>
 
-NearestTrioProblem::NearestTrioProblem(NodeSet<float> NS): _NS(NS)
+NearestTrioProblem::NearestTrioProblem(const NodeSet<float>& NS): _NS(NS)
 {
 
 }
@@ -39,9 +39,9 @@ double NearestTrioProblem::calculateMin(const std::pair<float, float>& p1, const
 {
 
     //Calculate three node combs
-    double distance1 = calculateDistance(p1, p2);
-    double distance2 = calculateDistance(p1, p3);
-    double distance3 = calculateDistance(p2, p3);
+    float distance1 = calculateDistance(p1, p2);
+    float distance2 = calculateDistance(p1, p3);
+    float distance3 = calculateDistance(p2, p3);
 
     //Sum the distance two to two
     double sum_distance1 = distance1 + distance2;
@@ -64,9 +64,9 @@ double NearestTrioProblem::simpleSolution(NodeSet<float> _NS, std::pair<float, f
     //Absolute Minimal distance
     double min_distance = std::numeric_limits<double>::infinity();
 
-    for(int i = 0; i < _NS.size(); i++) {
-        for(int j = i+1; j < _NS.size(); j++) {
-            for(int k = j+1; k < _NS.size(); k++) {
+    for(size_t i = 0; i < _NS.size(); i++) {
+        for(size_t j = i+1; j < _NS.size(); j++) {
+            for(size_t k = j+1; k < _NS.size(); k++) {
 
                 //Calculate minimal distance in the Trio
                 double min = calculateMin(_NS[i], _NS[j], _NS[k]);
@@ -88,17 +88,42 @@ double NearestTrioProblem::simpleSolution(NodeSet<float> _NS, std::pair<float, f
 
 double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
-    simpleSolution(this->_NS, p1, p2, p3);
+    return simpleSolution(this->_NS, p1, p2, p3);
 }
 
 
 double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
+    GenNodeSet GenNS(_NS);
 
+    //NodeSet sortered
+    NodeSet<float> NS = GenNS.xSortNodeSet();
+
+    //NodeSet solution
+    NodeSet<float> solution;
+
+    //Call to recursive function
+    double min_distance = dcSolution(NS, solution, NS.size());
+
+    //Assign solution to pairs
+    p1 = solution[0];
+    p2 = solution[1];
+    p3 = solution[2];
+
+    return min_distance;
 }
 
-double NearestTrioProblem::dcSolution(NodeSet<float>& solution, NodeSet<float>& NSX, NodeSet<float>& NSY, int n)
+double NearestTrioProblem::dcSolution(NodeSet<float>& solution, NodeSet<float>& NSX, int n)
 {
+    if(n/2 > 3){
+        std::pair<float, float> middle = NSX[n/2];
+        n /= 2;
 
+        //dcSolution()
+    }
+    else{
+
+
+    }
 
 }

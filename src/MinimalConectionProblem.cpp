@@ -18,6 +18,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "MinimalConectionProblem.h"
 
 #include <cmath>
+#include <utility>
 
 MinimalConectionProblem::MinimalConectionProblem(const NodeSet<int>& NS): _NS(NS)
 {
@@ -44,18 +45,91 @@ void MinimalConectionProblem::genEdgeSet()
     {
         for(int j = i + 1; j < _NS.size(); j++)
         {
-            EdgeSet.push_back( edge{i, j, calculateEuclideanDistance(_NS[i], _NS[j]) } );
+            EdgeSet.push_back( edge{_NS[i], _NS[j], calculateEuclideanDistance(_NS[i], _NS[j]) } );
         }
     }
 }
 
+void MinimalConectionProblem::sortEdgeSet(){
+    for(int h = EdgeSet.size() / 2; h > 0; h /= 2)
+    {
+
+        for(int i = h; i < EdgeSet.size(); i++)
+        {
+            int j = i;
+            struct edge elem = EdgeSet[i];
+
+            while(j >= h && elem.distance < EdgeSet[j-h].distance)
+            {
+                std::swap(EdgeSet[j], EdgeSet[j-h]);
+                j -= h;
+            }
+
+            EdgeSet[j] = elem;
+        }
+    }
+}
 
 int MinimalConectionProblem::primSolution()
 {
 
 }
 
-int MinimalConectionProblem::kruskalSolution()
+int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
 {
+    int connected = 0;
+    int distance = 0;
+    std::vector<std::set<std::pair<int, int> > > set_collection;
+
+    //Generate EdgeSet
+    genEdgeSet();
+
+    //Sort Edgeset using distance
+    sortEdgeSet();
+
+    //Initialize vector of set
+    std::vector<std::set<std::pair<int, int> > > ::iterator itv = set_collection.begin();
+    for(NodeSet<int>::iterator it = _NS.begin(); it != _NS.end(); it++){
+        itv->insert(*it);
+        itv++;
+    }
+
+    //execute algorithm
+    std::vector<edge>::iterator it = EdgeSet.begin();
+    while(connected < _NS.size()){
+        int U, V;
+        U = V = -1;
+
+        //Search edge in set's vector
+        int i = 0;
+        while(U != -1 && V != -1){
+            if(U != -1){
+                if(set_collection[i].find(it->a) != set_collection[i].end()) U = i;
+            }
+            if(V != -1){
+                if(set_collection[i].find(it->b) != set_collection[i].end()) V = i;
+            }
+            i++;
+        }
+
+        if(set_collection[U] != set_collection[V]){
+            connected++;
+            it++;
+
+            //Merge elements
+            std::set<std::pair<int, int> >::iterator itsc = set_collection[V].begin();
+            while(!set_collection[V].empty()){
+                set_collection[U].insert(*itsc);
+                itsc = set_collection[V].erase(itsc);
+            }
+            set_collection.erase(set_collection.begin()+V);
+
+            solution.insert(*it);
+            distance+= it->distance;
+        }
+
+    }
+
+    return distance;
 
 }

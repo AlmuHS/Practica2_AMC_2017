@@ -37,7 +37,9 @@ public:
     GenNodeSet();
 
     template<typename T0>
-    GenNodeSet(NodeSet<T0> NS);
+    GenNodeSet(NodeSet<T0> NS){
+        _NS = NS;
+    }
 
     //Generate a new NodeSet with random elements
     void genRandomNodeSet(NodeSet<float>& NS, int size);

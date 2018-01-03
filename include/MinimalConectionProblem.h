@@ -20,33 +20,41 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include <vector>
 #include <utility>
+#include <set>
 
 template<typename T0, typename T1 = T0>
 using NodeSet = std::vector<std::pair<T0, T1> >;
 
 struct edge{
-    int a;
-    int b;
+    std::pair<int, int> a;
+    std::pair<int, int> b;
 
     int distance;
 };
+
+//overloaded operator, needed to std::set
+bool operator<(const edge& e1, const edge& e2){
+    return(e1.distance < e2.distance);
+}
+
 
 class MinimalConectionProblem
 {
     private:
         NodeSet<int> _NS;
         std::vector<edge> EdgeSet;
+        std::vector<int> distMatrix;
+
+        void genEdgeSet();
+        void sortEdgeSet();
+        int calculateEuclideanDistance(std::pair<int, int> a, std::pair<int, int> b);
 
     public:
         MinimalConectionProblem(const NodeSet<int>& NS);
         MinimalConectionProblem(const MinimalConectionProblem& other);
 
-        int calculateEuclideanDistance(std::pair<int, int> a, std::pair<int, int> b);
-        void genEdgeSet();
-
-
         int primSolution();
-        int kruskalSolution();
+        int kruskalSolution(std::set<edge> &solution);
 };
 
 #endif // MINIMALCONECTIONPROBLEM_H
