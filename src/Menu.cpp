@@ -61,8 +61,6 @@ void Menu::MainMenu()
 
     do
     {
-
-
         std::cout<<"Complex Algorithms Study\n"
                  <<"----------------------------\n"
                  <<"0. Exit\n"
@@ -156,9 +154,4 @@ void Menu::MCPMenu(){
     clear();
 
     TMCP.testAlgorithm(option);
-
-    std::cout<<"\n\nPress ENTER to continue\n";
-
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-
 }

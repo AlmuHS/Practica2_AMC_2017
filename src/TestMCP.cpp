@@ -1,4 +1,4 @@
-#include "TestMCP.h"
+#include "../include/TestMCP.h"
 
 TestMCP::TestMCP()
 {
@@ -10,8 +10,7 @@ void TestMCP::testAlgorithm(int algorithm){
     NodeSet<int> NS;
     std::string filename = "";
 
-    std::vector<std::string> file = {"berlin52.tsp", "ch130.tsp", "ch150.tsp"};
-
+    std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};
     std::cout<<"Select file: \n"
              <<"1. berlin52\n"
              <<"2. ch130\n"
@@ -33,6 +32,8 @@ void TestMCP::testAlgorithm(int algorithm){
     GenNodeSet GenNS;
 
     GenNS.genNodeSetFromFile(NS, filename);
+    std::cout<<"NodeSet generated\n";
+
     GenNS.showNodeSet(NS);
 
     MinimalConectionProblem MCP(NS);

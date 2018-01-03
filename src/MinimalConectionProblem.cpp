@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
-#include "MinimalConectionProblem.h"
+#include "../include/MinimalConectionProblem.h"
 
 #include <cmath>
 #include <utility>
