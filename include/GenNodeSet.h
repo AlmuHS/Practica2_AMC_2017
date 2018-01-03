@@ -22,6 +22,8 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <type_traits>
+#include <cmath>
 
 template<typename T0, typename T1 = T0>
 using NodeSet = std::vector<std::pair<T0, T1> >;
@@ -56,7 +58,7 @@ public:
     {
         std::ifstream file(filename.c_str());
         std::string line = "";
-        T0 x, y;
+        float x, y;
         int n = 1;
 
         //Skip file headers
@@ -79,6 +81,11 @@ public:
                 //Read data from the line and copy in variables
                 file >> x;
                 file >> y;
+
+                if(std::is_same<T0, int>::value){
+                    x = rint(x);
+                    y = rint(y);
+                }
 
                 //Add a new pair with line values
                 NS.push_back(std::make_pair(x,y));
