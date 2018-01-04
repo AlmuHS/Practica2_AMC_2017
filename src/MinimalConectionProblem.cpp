@@ -22,14 +22,10 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <iostream>
 #include <algorithm>
 
-//overloaded operator, needed to std::set
+//overloaded operator, needed to std::set and std::sort
 bool operator<(const edge& e1, const edge& e2){
     return(e1.distance < e2.distance);
 }
-
-/*bool cmp(const edge& e1, const edge& e2){
-    return (e1 < e2);
-}*/
 
 MinimalConectionProblem::MinimalConectionProblem(const NodeSet<int>& NS): _NS(NS)
 {
@@ -76,7 +72,6 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
     genEdgeSet();
 
     //Sort Edgeset using distance
-    //sortEdgeSet();
     std::sort(EdgeSet.begin(), EdgeSet.end());
 
     //Initialize vector of set
@@ -114,7 +109,6 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
                 set_collection[U].insert(*itsc);
                 itsc = set_collection[V].erase(itsc);
             }
-            //set_collection.erase(set_collection.begin()+V);
 
             solution.insert(*it);
             distance+= it->distance;
