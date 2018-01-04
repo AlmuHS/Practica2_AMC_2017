@@ -19,6 +19,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include <cmath>
 #include <utility>
+#include <iostream>
 
 //overloaded operator, needed to std::set
 bool operator<(const edge& e1, const edge& e2){
@@ -108,11 +109,11 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
 
         //Search edge in set's vector
         int i = 0;
-        while(U != -1 && V != -1){
-            if(U != -1){
+        while(U == -1 || V == -1){
+            if(U == -1){
                 if(set_collection[i].find(it->a) != set_collection[i].end()) U = i;
             }
-            if(V != -1){
+            if(V == -1){
                 if(set_collection[i].find(it->b) != set_collection[i].end()) V = i;
             }
             i++;
@@ -128,10 +129,11 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
                 set_collection[U].insert(*itsc);
                 itsc = set_collection[V].erase(itsc);
             }
-            set_collection.erase(set_collection.begin()+V);
+            //set_collection.erase(set_collection.begin()+V);
 
             solution.insert(*it);
             distance+= it->distance;
+            std::cout<<"<"<<it->a.first<<","<<it->a.second<<"> "<<it->b.first<<","<<it->b.second<<"> - "<<distance<<std::endl;
         }
 
     }
