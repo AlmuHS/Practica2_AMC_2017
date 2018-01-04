@@ -30,7 +30,6 @@ void TestMCP::testAlgorithm(int algorithm){
         filename = "data/" + filename + "/" + filename;
     }
 
-
     GenNodeSet GenNS;
 
     GenNS.genNodeSetFromFile(NS, filename);
@@ -41,9 +40,11 @@ void TestMCP::testAlgorithm(int algorithm){
     MinimalConectionProblem MCP(NS);
 
     std::set<edge> solution;
-    int distance = MCP.kruskalSolution(solution);
+    int distance;
 
-    std::cout<<"The minimal connection tree is: \n";
+    if(algorithm == 2) distance = MCP.kruskalSolution(solution);
+
+    std::cout<<"\n\nThe minimal connection tree is: \n";
     for(std::set<edge>::iterator it = solution.begin(); it != solution.end(); it++){
         std::cout<<"<"<<it->a.first<<", "<<it->a.second<<"> - "<<"<"<<it->b.first<<", "<<it->b.second<<"> \n";
     }
