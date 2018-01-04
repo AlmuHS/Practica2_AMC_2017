@@ -20,12 +20,16 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <cmath>
 #include <utility>
 #include <iostream>
+#include <algorithm>
 
 //overloaded operator, needed to std::set
 bool operator<(const edge& e1, const edge& e2){
     return(e1.distance < e2.distance);
 }
 
+/*bool cmp(const edge& e1, const edge& e2){
+    return (e1 < e2);
+}*/
 
 MinimalConectionProblem::MinimalConectionProblem(const NodeSet<int>& NS): _NS(NS)
 {
@@ -57,26 +61,6 @@ void MinimalConectionProblem::genEdgeSet()
     }
 }
 
-void MinimalConectionProblem::sortEdgeSet(){
-    for(int h = EdgeSet.size() / 2; h > 0; h /= 2)
-    {
-
-        for(int i = h; i < EdgeSet.size(); i++)
-        {
-            int j = i;
-            struct edge elem = EdgeSet[i];
-
-            while(j >= h && elem.distance < EdgeSet[j-h].distance)
-            {
-                std::swap(EdgeSet[j], EdgeSet[j-h]);
-                j -= h;
-            }
-
-            EdgeSet[j] = elem;
-        }
-    }
-}
-
 int MinimalConectionProblem::primSolution()
 {
     return 0;
@@ -92,7 +76,8 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
     genEdgeSet();
 
     //Sort Edgeset using distance
-    sortEdgeSet();
+    //sortEdgeSet();
+    std::sort(EdgeSet.begin(), EdgeSet.end());
 
     //Initialize vector of set
     for(NodeSet<int>::iterator it = _NS.begin(); it != _NS.end(); it++){
