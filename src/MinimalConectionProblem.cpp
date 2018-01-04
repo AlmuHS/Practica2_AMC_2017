@@ -83,7 +83,7 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
 
     //execute algorithm
     std::vector<edge>::iterator it = EdgeSet.begin();
-    while(connected < _NS.size() && it != EdgeSet.end()){
+    while(connected < _NS.size()){
         int U, V;
         U = V = -1;
 
@@ -100,7 +100,7 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
         }
 
         if(set_collection[U] != set_collection[V]){
-            connected++;
+            connected += 2;
 
             //Merge elements
             std::set<std::pair<int, int> >::iterator itsc = set_collection[V].begin();
@@ -111,7 +111,7 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
 
             solution.insert(*it);
             distance+= it->distance;
-            std::cout<<"<"<<it->a.first<<","<<it->a.second<<"> "<<it->b.first<<","<<it->b.second<<"> - "<<distance<<std::endl;
+            std::cout<<"<"<<it->a.first<<","<<it->a.second<<"> <"<<it->b.first<<","<<it->b.second<<"> - "<<distance<<std::endl;
         }
         it++;
     }
