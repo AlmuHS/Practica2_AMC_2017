@@ -78,7 +78,7 @@ void MinimalConectionProblem::sortEdgeSet(){
 
 int MinimalConectionProblem::primSolution()
 {
-
+    return 0;
 }
 
 int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
@@ -94,10 +94,10 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
     sortEdgeSet();
 
     //Initialize vector of set
-    std::vector<std::set<std::pair<int, int> > > ::iterator itv = set_collection.begin();
     for(NodeSet<int>::iterator it = _NS.begin(); it != _NS.end(); it++){
-        itv->insert(*it);
-        itv++;
+        std::set<std::pair<int, int> > new_set;
+        new_set.emplace(*it);
+        set_collection.push_back(new_set);
     }
 
     //execute algorithm

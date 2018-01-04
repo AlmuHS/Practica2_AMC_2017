@@ -82,6 +82,7 @@ public:
                 file >> x;
                 file >> y;
 
+                //If the template type is int, round to int the readed values
                 if(std::is_same<T0, int>::value){
                     x = rint(x);
                     y = rint(y);
