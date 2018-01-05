@@ -25,12 +25,14 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 class TestNTP
 {
 private:
+    float min_distance;
+    std::pair<float, float> p1, p2, p3;
 
 public:
     TestNTP();
 
     void testRandom(int algorithm);
-    void testFromFile(const NodeSet& NS, int algorithm);
+    void executeAlgorithm(const NodeSet&NS, int algorithm);
 };
 
 #endif // TESTNTP_H

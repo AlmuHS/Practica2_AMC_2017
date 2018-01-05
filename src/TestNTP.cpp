@@ -40,28 +40,11 @@ void TestNTP::testRandom(int algorithm)
 
     GenNS.showNodeSet(NS);
 
-    NearestTrioProblem NTP(NS);
-    std::pair<float, float> p1, p2, p3;
-
-    double min_distance;
-
-    if(algorithm == 1)
-        min_distance = NTP.simpleSolution(p1, p2, p3);
-    else min_distance = NTP.dcSolution(p1, p2, p3);
-
-    std::cout<<"The minimal distance is: "<<min_distance<<std::endl
-             <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "
-             <<"<"<<p2.first<<", "<<p2.second<<"> "
-             <<"<"<<p3.first<<", "<<p3.second<<">"<<std::endl;
-
+    executeAlgorithm(NS, algorithm);
 }
 
-void TestNTP::testFromFile(const NodeSet &NS, int algorithm)
-{
-   NearestTrioProblem NTP(NS);
-
-    double min_distance;
-    std::pair<float, float> p1, p2, p3;
+void TestNTP::executeAlgorithm(const NodeSet&NS, int algorithm){
+    NearestTrioProblem NTP(NS);
 
     if(algorithm == 1)
         min_distance = NTP.simpleSolution(p1, p2, p3);
@@ -69,10 +52,10 @@ void TestNTP::testFromFile(const NodeSet &NS, int algorithm)
         min_distance = NTP.dcSolution(p1, p2, p3);
     }
 
-
     std::cout<<"The minimal distance is: "<<min_distance<<std::endl
              <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "
              <<"<"<<p2.first<<", "<<p2.second<<"> "
              <<"<"<<p3.first<<", "<<p3.second<<">"<<std::endl;
-
 }
+
+

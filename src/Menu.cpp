@@ -133,7 +133,7 @@ void Menu::NTPMenu()
 
     case 2:
         NS = fileMenu();
-        TNTP.testFromFile(NS, option1);
+        TNTP.executeAlgorithm(NS, option1);
         break;
 
     };
