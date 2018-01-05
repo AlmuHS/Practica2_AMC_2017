@@ -43,7 +43,7 @@ public:
     double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     //Call to exhaustive algoritm without parameters
-    double simpleSolution(NodeSet _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+    double simpleSolution(NodeSet& _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     //Call to Divide and Conquer algorithm
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);

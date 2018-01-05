@@ -58,25 +58,29 @@ double NearestTrioProblem::calculateMin(const std::pair<float, float>& p1, const
     return min;
 }
 
-double NearestTrioProblem::simpleSolution(NodeSet _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+double NearestTrioProblem::simpleSolution(NodeSet& _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
 
     //Absolute Minimal distance
     double min_distance = std::numeric_limits<double>::infinity();
 
-    for(size_t i = 0; i < _NS.size(); i++) {
-        for(size_t j = i+1; j < _NS.size(); j++) {
-            for(size_t k = j+1; k < _NS.size(); k++) {
-
+    //for(size_t i = 0; i < _NS.size(); i++) {
+    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++)
+    {
+        for(NodeSet::iterator it2 = it+1; it2 != _NS.end(); it2++)
+        {
+            for(NodeSet::iterator it3 = it2+1; it3 != _NS.end(); it3++)
+            {
                 //Calculate minimal distance in the Trio
-                double min = calculateMin(_NS[i], _NS[j], _NS[k]);
+                double min = calculateMin(*it, *it2, *it3);
 
                 //Update absolute minimal value
-                if(min < min_distance) {
+                if(min < min_distance)
+                {
                     min_distance = min;
-                    p1 = _NS[i];
-                    p2 = _NS[j];
-                    p3 = _NS[k];
+                    p1 =  *it;
+                    p2 = *it2;
+                    p3 = *it3;
                 }
 
             }//End k for
@@ -115,13 +119,15 @@ double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<flo
 
 double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, int n)
 {
-    if(n/2 > 3){
+    if(n/2 > 3)
+    {
         std::pair<float, float> middle = NSX[n/2];
         n /= 2;
 
         //dcSolution()
     }
-    else{
+    else
+    {
 
 
     }
