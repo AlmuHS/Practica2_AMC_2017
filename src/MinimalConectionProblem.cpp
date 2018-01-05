@@ -92,14 +92,16 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
 
         //Search edge in set vector
         int i = 0;
+        std::vector<std::set<std::pair<float, float> > >::iterator itsc = set_collection.begin();
         while(U == -1 || V == -1)
         {
-            if(!set_collection[i].empty())
+            if(!itsc->empty())
             {
-                if(U == -1 && set_collection[i].find(it->a) != set_collection[i].end()) U = i;
-                if(V == -1 && set_collection[i].find(it->b) != set_collection[i].end()) V = i;
+                if(U == -1 && itsc->find(it->a) != itsc->end()) U = i;
+                if(V == -1 && itsc->find(it->b) != itsc->end()) V = i;
             }
             i++;
+            itsc++;
         }
 
         //If both set are different, add edge to solution set
