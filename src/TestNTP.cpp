@@ -46,6 +46,9 @@ void TestNTP::testRandom(int algorithm)
 void TestNTP::executeAlgorithm(const NodeSet&NS, int algorithm){
     NearestTrioProblem NTP(NS);
 
+    float min_distance;
+    std::pair<float, float> p1, p2, p3;
+
     if(algorithm == 1)
         min_distance = NTP.simpleSolution(p1, p2, p3);
     else{
