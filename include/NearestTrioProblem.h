@@ -23,13 +23,12 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 //using NodeSet = std::vector<std::pair<float, float> >;
 
-template<typename T0, typename T1 = T0>
-using NodeSet = std::vector<std::pair<T0, T1> >;
+using NodeSet = std::vector<std::pair<float, float> >;
 
 class NearestTrioProblem
 {
 private:
-    NodeSet<float> _NS;
+    NodeSet _NS;
 
     //Calculate the distance between two nodes
     float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
@@ -38,19 +37,19 @@ private:
     double calculateMin(const std::pair<float, float>& p1, const std::pair<float, float>& p2, const std::pair<float, float>& p3);
 
 public:
-    NearestTrioProblem(const NodeSet<float>& NS);
+    NearestTrioProblem(const NodeSet& NS);
 
     //Exhaustive algorithm
     double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     //Call to exhaustive algoritm without parameters
-    double simpleSolution(NodeSet<float> _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
+    double simpleSolution(NodeSet _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     //Call to Divide and Conquer algorithm
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     //Divide and Conquer recursive method
-    double dcSolution(NodeSet<float>& solution, NodeSet<float>& NSX, int n);
+    double dcSolution(NodeSet& solution, NodeSet& NSX, int n);
 
 };
 

@@ -7,7 +7,7 @@ TestMCP::TestMCP()
 
 void TestMCP::testAlgorithm(int algorithm){
     int option = 0;
-    NodeSet<int> NS;
+    NodeSet NS;
     std::string filename = "";
 
     std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};

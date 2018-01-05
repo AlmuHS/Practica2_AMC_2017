@@ -22,12 +22,11 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <utility>
 #include <set>
 
-template<typename T0, typename T1 = T0>
-using NodeSet = std::vector<std::pair<T0, T1> >;
+using NodeSet = std::vector<std::pair<float, float> >;
 
 struct edge{
-    std::pair<int, int> a;
-    std::pair<int, int> b;
+    std::pair<float, float> a;
+    std::pair<float, float> b;
 
     int distance;
 };
@@ -37,15 +36,15 @@ struct edge{
 class MinimalConectionProblem
 {
     private:
-        NodeSet<int> _NS;
+        NodeSet _NS;
         std::vector<edge> EdgeSet;
         std::vector<int> distMatrix;
 
         void genEdgeSet();
-        int calculateEuclideanDistance(std::pair<int, int> a, std::pair<int, int> b);
+        int calculateEuclideanDistance(std::pair<float, float> a, std::pair<float, float> b);
 
     public:
-        MinimalConectionProblem(const NodeSet<int>& NS);
+        MinimalConectionProblem(const NodeSet& NS);
         MinimalConectionProblem(const MinimalConectionProblem& other);
 
         int primSolution();

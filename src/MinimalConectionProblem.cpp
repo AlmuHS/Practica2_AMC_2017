@@ -27,7 +27,7 @@ bool operator<(const edge& e1, const edge& e2){
     return(e1.distance < e2.distance);
 }
 
-MinimalConectionProblem::MinimalConectionProblem(const NodeSet<int>& NS): _NS(NS)
+MinimalConectionProblem::MinimalConectionProblem(const NodeSet& NS): _NS(NS)
 {
     //ctor
 }
@@ -38,10 +38,10 @@ MinimalConectionProblem::MinimalConectionProblem(const MinimalConectionProblem& 
     *this = other;
 }
 
-int MinimalConectionProblem::calculateEuclideanDistance(std::pair<int, int> a, std::pair<int, int> b)
+int MinimalConectionProblem::calculateEuclideanDistance(std::pair<float, float> a, std::pair<float, float> b)
 {
-    int xd = a.first - b.first;
-    int yd = a.second - b.second;
+    float xd = a.first - b.first;
+    float yd = a.second - b.second;
 
     return rint(sqrt(xd*xd + yd*yd));
 }
@@ -66,7 +66,7 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
 {
     int connected = 0;
     int distance = 0;
-    std::vector<std::set<std::pair<int, int> > > set_collection;
+    std::vector<std::set<std::pair<float, float> > > set_collection;
 
     //Generate EdgeSet
     genEdgeSet();
@@ -75,8 +75,8 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
     std::sort(EdgeSet.begin(), EdgeSet.end());
 
     //Initialize vector of set
-    for(NodeSet<int>::iterator it = _NS.begin(); it != _NS.end(); it++){
-        std::set<std::pair<int, int> > new_set;
+    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++){
+        std::set<std::pair<float, float> > new_set;
         new_set.emplace(*it);
         set_collection.push_back(new_set);
     }
@@ -103,7 +103,7 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
             connected += 2;
 
             //Merge elements
-            std::set<std::pair<int, int> >::iterator itsc = set_collection[V].begin();
+            std::set<std::pair<float, float> >::iterator itsc = set_collection[V].begin();
             while(!set_collection[V].empty()){
                 set_collection[U].insert(*itsc);
                 itsc = set_collection[V].erase(itsc);

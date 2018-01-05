@@ -35,7 +35,7 @@ void TestNTP::testRandom(int algorithm)
 
     GenNodeSet GenNS;
 
-    NodeSet<float> NS;
+    NodeSet NS;
     GenNS.genRandomNodeSet(NS, size);
 
     GenNS.showNodeSet(NS);
@@ -59,7 +59,7 @@ void TestNTP::testRandom(int algorithm)
 void TestNTP::testFromFile(int algorithm)
 {
     int option = 0;
-    NodeSet<float> NS;
+    NodeSet NS;
     std::string filename = "";
 
     std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};

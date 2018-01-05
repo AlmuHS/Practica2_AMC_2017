@@ -26,7 +26,12 @@ GenNodeSet::GenNodeSet()
     //ctor
 }
 
-void GenNodeSet::genRandomNodeSet(NodeSet<float>& NS, int size)
+GenNodeSet::GenNodeSet(const NodeSet& NS)
+{
+    _NS = NS;
+}
+
+void GenNodeSet::genRandomNodeSet(NodeSet& NS, int size)
 {
     std::random_device rd;     // only used once to initialise (seed) engine
     std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
@@ -41,7 +46,44 @@ void GenNodeSet::genRandomNodeSet(NodeSet<float>& NS, int size)
     this->_NS = NS;
 }
 
-NodeSet<float> GenNodeSet::xSortNodeSet()
+//Generate a new NodeSet from a datafile
+void GenNodeSet::genNodeSetFromFile(NodeSet& NS, std::string filename)
+{
+    std::ifstream file(filename.c_str());
+    std::string line = "";
+    float x, y;
+    int n = 1;
+
+    //Skip file headers
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+    std::getline(file, line);
+
+    //Read file line to libe
+    while(n != 0)
+    {
+        file >> n; //line number
+
+        //If linenumber is not null, continues
+        if(n != 0)
+        {
+
+            //Read data from the line and copy in variables
+            file >> x;
+            file >> y;
+
+            //Add a new pair with line values
+            NS.push_back(std::make_pair(x,y));
+        }
+    }
+
+    //this->_NS = NS;
+}
+
+NodeSet GenNodeSet::xSortNodeSet()
 {
 
     for(int h = _NS.size() / 2; h > 0; h /= 2)
@@ -64,7 +106,7 @@ NodeSet<float> GenNodeSet::xSortNodeSet()
     return _NS;
 }
 
-NodeSet<float> GenNodeSet::ySortNodeSet()
+NodeSet GenNodeSet::ySortNodeSet()
 {
 
     for(int h = _NS.size() / 2; h > 0; h /= 2)
@@ -85,4 +127,12 @@ NodeSet<float> GenNodeSet::ySortNodeSet()
         }
     }
     return _NS;
+}
+
+void GenNodeSet::showNodeSet(const NodeSet& NS)
+{
+    for(int i = 0; i < NS.size(); i++)
+    {
+        std::cout<<"<"<<NS[i].first<<", "<<NS[i].second<<">"<<std::endl;
+    }
 }
