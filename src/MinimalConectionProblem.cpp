@@ -110,11 +110,11 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
             connected += 2;
 
             //Merge set
-            std::set<std::pair<float, float> >::iterator itsc = set_collection[V].begin();
+            std::set<std::pair<float, float> >::iterator itset = set_collection[V].begin();
             while(!set_collection[V].empty())
             {
-                set_collection[U].insert(*itsc);
-                itsc = set_collection[V].erase(itsc);
+                set_collection[U].insert(*itset);
+                itset = set_collection[V].erase(itset);
             }
 
             //Add edge to solution set
