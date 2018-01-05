@@ -48,11 +48,11 @@ int MinimalConectionProblem::calculateEuclideanDistance(std::pair<float, float> 
 
 void MinimalConectionProblem::genEdgeSet()
 {
-    for(int i = 0; i < _NS.size(); i++)
+    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++)
     {
-        for(int j = i + 1; j < _NS.size(); j++)
+        for(NodeSet::iterator it2 = it+1; it2 != _NS.end(); it2++)
         {
-            EdgeSet.push_back( edge{_NS[i], _NS[j], calculateEuclideanDistance(_NS[i], _NS[j]) } );
+            EdgeSet.push_back( edge{*it, *it2, calculateEuclideanDistance(*it, *it2) } );
         }
     }
 }
@@ -74,10 +74,10 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
     //Sort Edgeset using distance
     std::sort(EdgeSet.begin(), EdgeSet.end());
 
-    //Initialize vector of set
+    //Initialize set vector
     for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++){
         std::set<std::pair<float, float> > new_set;
-        new_set.emplace(*it);
+        new_set.insert(*it);
         set_collection.push_back(new_set);
     }
 
@@ -99,18 +99,20 @@ int MinimalConectionProblem::kruskalSolution(std::set<edge>& solution)
             i++;
         }
 
+        //If both set are different, add edge to solution set
         if(set_collection[U] != set_collection[V]){
             connected += 2;
 
-            //Merge elements
+            //Merge set
             std::set<std::pair<float, float> >::iterator itsc = set_collection[V].begin();
             while(!set_collection[V].empty()){
                 set_collection[U].insert(*itsc);
                 itsc = set_collection[V].erase(itsc);
             }
 
+            //Add edge to solution set
             solution.insert(*it);
-            distance+= it->distance;
+            distance += it->distance;
             std::cout<<"<"<<it->a.first<<","<<it->a.second<<"> <"<<it->b.first<<","<<it->b.second<<"> - "<<distance<<std::endl;
         }
         it++;
