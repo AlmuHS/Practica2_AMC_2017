@@ -71,8 +71,9 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
     //Generate EdgeSet
     genEdgeSet();
 
-    //Sort Edgeset using distance
-    std::sort(EdgeSet.begin(), EdgeSet.end());
+    //Transform Edgeset in a sorted heap using distance
+    std::make_heap(EdgeSet.begin(), EdgeSet.end());
+    std::sort_heap(EdgeSet.begin(), EdgeSet.end());
 
     //auxiliar nodeset to execute algorithm faster
     std::set<std::pair<float, float> > NS;
