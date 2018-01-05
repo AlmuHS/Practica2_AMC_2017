@@ -9,7 +9,7 @@ void TestMCP::testAlgorithm(const NodeSet& NS, int algorithm){
 
     MinimalConectionProblem MCP(NS);
 
-    std::set<edge> solution;
+    std::multiset<edge> solution;
     int distance;
 
     if(algorithm == 2) distance = MCP.kruskalSolution(solution);

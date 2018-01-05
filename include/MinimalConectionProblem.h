@@ -46,7 +46,7 @@ class MinimalConectionProblem
         MinimalConectionProblem(const MinimalConectionProblem& other);
 
         int primSolution();
-        int kruskalSolution(std::set<edge> &solution);
+        int kruskalSolution(std::multiset<edge> &solution);
 };
 
 #endif // MINIMALCONECTIONPROBLEM_H
