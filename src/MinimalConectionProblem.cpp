@@ -65,7 +65,6 @@ int MinimalConectionProblem::primSolution()
 
 int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
 {
-    int connected = 0;
     int distance = 0;
     std::vector<std::set<std::pair<float, float> > > set_collection;
 
@@ -75,17 +74,21 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
     //Sort Edgeset using distance
     std::sort(EdgeSet.begin(), EdgeSet.end());
 
-    //Initialize set vector
+    //auxiliar nodeset to execute algorithm faster
+    std::set<std::pair<float, float> > NS;
+
+    //Initialize set vector and node set
     for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++)
     {
         std::set<std::pair<float, float> > new_set;
         new_set.insert(*it);
         set_collection.push_back(new_set);
+        NS.insert(*it);
     }
 
     //execute algorithm
     std::vector<edge>::iterator it = EdgeSet.begin();
-    while(connected < _NS.size())
+    while(!NS.empty())
     {
         int U, V;
         U = V = -1;
@@ -107,7 +110,9 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         //If both set are different, add edge to solution set
         if(set_collection[U] != set_collection[V])
         {
-            connected += 2;
+            //Delete connected nodes
+            NS.erase(it->a);
+            NS.erase(it->b);
 
             //Merge set
             std::set<std::pair<float, float> >::iterator itset = set_collection[V].begin();
