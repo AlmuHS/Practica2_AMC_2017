@@ -129,10 +129,11 @@ NodeSet GenNodeSet::ySortNodeSet()
     return _NS;
 }
 
-void GenNodeSet::showNodeSet(const NodeSet& NS)
+void GenNodeSet::showNodeSet(NodeSet& NS)
 {
-    for(int i = 0; i < NS.size(); i++)
+    //for(int i = 0; i < NS.size(); i++)
+    for(NodeSet::iterator it = NS.begin(); it != NS.end(); it++)
     {
-        std::cout<<"<"<<NS[i].first<<", "<<NS[i].second<<">"<<std::endl;
+        std::cout<<"<"<<it->first<<", "<<it->second<<">"<<std::endl;
     }
 }
