@@ -18,6 +18,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #ifndef MENU_H
 #define MENU_H
 
+#include "GenNodeSet.h"
 
 class Menu
 {
@@ -27,6 +28,7 @@ class Menu
         void MainMenu();
         void NTPMenu();
         void MCPMenu();
+        NodeSet fileMenu();
 
     protected:
 

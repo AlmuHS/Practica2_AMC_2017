@@ -30,7 +30,7 @@ public:
     TestNTP();
 
     void testRandom(int algorithm);
-    void testFromFile(int algorithm);
+    void testFromFile(const NodeSet& NS, int algorithm);
 };
 
 #endif // TESTNTP_H

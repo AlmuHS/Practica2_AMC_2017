@@ -5,37 +5,7 @@ TestMCP::TestMCP()
     //ctor
 }
 
-void TestMCP::testAlgorithm(int algorithm){
-    int option = 0;
-    NodeSet NS;
-    std::string filename = "";
-
-    std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};
-
-    std::cout<<"Select file: \n"
-             <<"1. berlin52\n"
-             <<"2. ch130\n"
-             <<"3. ch150\n"
-             <<"4. Other file\n"
-             <<"Select option: ";
-    std::cin>>option;
-
-    if(option != 4)
-        filename =  file[option-1];
-    else
-    {
-        std::cout<<"Introduce filename: ";
-        std::cin>>filename;
-
-        filename = "data/" + filename + "/" + filename;
-    }
-
-    GenNodeSet GenNS;
-
-    GenNS.genNodeSetFromFile(NS, filename);
-    GenNS.showNodeSet(NS);
-
-    std::cout<<"NodeSet generado\n";
+void TestMCP::testAlgorithm(const NodeSet& NS, int algorithm){
 
     MinimalConectionProblem MCP(NS);
 

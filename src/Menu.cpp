@@ -103,6 +103,7 @@ void Menu::NTPMenu()
 {
     int option1 = 0, option2 = 0;
     TestNTP TNTP;
+    NodeSet NS;
 
     std::cout<<"Nearest Trio Problem\n"
              <<"----------------------\n"
@@ -131,8 +132,8 @@ void Menu::NTPMenu()
         break;
 
     case 2:
-
-        TNTP.testFromFile(option1);
+        NS = fileMenu();
+        TNTP.testFromFile(NS, option1);
         break;
 
     };
@@ -140,6 +141,7 @@ void Menu::NTPMenu()
 
 void Menu::MCPMenu(){
     int option;
+    NodeSet NS;
 
     TestMCP TMCP;
 
@@ -153,5 +155,39 @@ void Menu::MCPMenu(){
 
     clear();
 
-    TMCP.testAlgorithm(option);
+    NS = fileMenu();
+    TMCP.testAlgorithm(NS, option);
+}
+
+NodeSet Menu::fileMenu(){
+    int option = 0;
+    NodeSet NS;
+    std::string filename = "";
+
+    std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};
+
+    std::cout<<"Select file: \n"
+             <<"1. berlin52\n"
+             <<"2. ch130\n"
+             <<"3. ch150\n"
+             <<"4. Other file\n"
+             <<"Select option: ";
+    std::cin>>option;
+
+    if(option != 4)
+        filename =  file[option-1];
+    else
+    {
+        std::cout<<"Introduce filename: ";
+        std::cin>>filename;
+
+        filename = "data/" + filename + "/" + filename;
+    }
+
+    GenNodeSet GenNS;
+
+    GenNS.genNodeSetFromFile(NS, filename);
+    GenNS.showNodeSet(NS);
+
+    return NS;
 }

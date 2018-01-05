@@ -31,8 +31,6 @@ struct edge{
     int distance;
 };
 
-
-
 class MinimalConectionProblem
 {
     private:

@@ -11,7 +11,7 @@ class TestMCP
     public:
         TestMCP();
 
-        void testAlgorithm(int algorithm);
+        void testAlgorithm(const NodeSet &NS, int algorithm);
 
 
 };
