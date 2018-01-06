@@ -28,6 +28,10 @@ bool operator<(const edge& e1, const edge& e2)
     return(e1.distance < e2.distance);
 }
 
+bool operator==(const edge& e1, const edge& e2){
+    return(e1.a == e2.a && e1.b == e2.b && e1.distance == e2.distance);
+}
+
 MinimalConectionProblem::MinimalConectionProblem(const NodeSet& NS): _NS(NS)
 {
     //ctor
@@ -109,7 +113,7 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         }
 
         //If both set are different, add edge to solution set
-        if(set_collection[U] != set_collection[V])
+        if(U != V && set_collection[U] != set_collection[V])
         {
             //Delete connected nodes
             NS.erase(it->a);
