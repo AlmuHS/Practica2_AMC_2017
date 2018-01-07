@@ -25,8 +25,8 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 using NodeSet = std::vector<std::pair<float, float> >;
 
 struct edge{
-    std::pair<float, float> a;
-    std::pair<float, float> b;
+    int a;
+    int b;
 
     int distance;
 };

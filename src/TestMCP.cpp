@@ -34,8 +34,8 @@ void TestMCP::testAlgorithm(const NodeSet& NS, int algorithm){
 
     std::cout<<"\n\nThe minimal connection tree is: \n";
     for(std::set<edge>::iterator it = solution.begin(); it != solution.end(); it++){
-        std::cout<<"<"<<it->a.first<<", "<<it->a.second<<"> - "<<"<"<<it->b.first<<", "<<it->b.second<<"> \n";
+        std::cout<<it->a<<"-"<<it->b<<", ";
     }
 
-    std::cout<<"The minimal distance is "<<distance;
+    std::cout<<"\nThe minimal distance is "<<distance;
 }
