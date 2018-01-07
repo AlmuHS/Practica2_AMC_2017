@@ -137,7 +137,7 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
             //Add edge to solution set
             solution.insert(*it);
             distance += it->distance;
-            std::cout<<it->a<<"-"<<it->b<<"\t->"<<it->distance<<std::endl;
+            std::cout<<it->a<<"-"<<it->b<<" ->\t"<<it->distance<<std::endl;
         }
         it++;
     }
