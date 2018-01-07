@@ -115,16 +115,20 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         //If both set are different, add edge to solution set
         if(U != V && set_collection[U] != set_collection[V])
         {
+
+            std::vector<std::set<std::pair<float, float> > >::iterator itu = set_collection.begin() + U;
+            std::vector<std::set<std::pair<float, float> > >::iterator itv = set_collection.begin() + V;
+
             //Delete connected nodes
             NS.erase(it->a);
             NS.erase(it->b);
 
             //Merge set
-            std::set<std::pair<float, float> >::iterator itset = set_collection[V].begin();
-            while(!set_collection[V].empty())
+            std::set<std::pair<float, float> >::iterator itset = itv->begin();
+            while(!itv->empty())
             {
-                set_collection[U].insert(*itset);
-                itset = set_collection[V].erase(itset);
+                itu->insert(*itset);
+                itset = itv->erase(itset);
             }
 
             //Add edge to solution set
