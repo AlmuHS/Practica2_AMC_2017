@@ -36,16 +36,17 @@ class MinimalConectionProblem
     private:
         NodeSet _NS;
         std::vector<edge> EdgeSet;
-        std::vector<int> distMatrix;
+        std::vector<std::vector<int> > distMatrix;
 
         void genEdgeSet();
         int calculateEuclideanDistance(std::pair<float, float> a, std::pair<float, float> b);
+        void initializeDistMatrix();
 
     public:
         MinimalConectionProblem(const NodeSet& NS);
         MinimalConectionProblem(const MinimalConectionProblem& other);
 
-        int primSolution();
+        int primSolution(std::vector<int> &solution);
         int kruskalSolution(std::multiset<edge> &solution);
 };
 

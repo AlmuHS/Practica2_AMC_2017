@@ -21,6 +21,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <utility>
 #include <iostream>
 #include <algorithm>
+#include <limits>
 
 //overloaded operator, needed to std::set and std::sort
 bool operator<(const edge& e1, const edge& e2)
@@ -28,9 +29,10 @@ bool operator<(const edge& e1, const edge& e2)
     return(e1.distance < e2.distance);
 }
 
-MinimalConectionProblem::MinimalConectionProblem(const NodeSet& NS): _NS(NS)
+MinimalConectionProblem::MinimalConectionProblem(const NodeSet& NS): _NS(NS), distMatrix(NS.size(), std::vector<int>(NS.size(), std::numeric_limits<int>::infinity()))
 {
     //ctor
+
 }
 
 MinimalConectionProblem::MinimalConectionProblem(const MinimalConectionProblem& other)
@@ -38,6 +40,7 @@ MinimalConectionProblem::MinimalConectionProblem(const MinimalConectionProblem& 
     //copy ctor
     *this = other;
 }
+
 
 int MinimalConectionProblem::calculateEuclideanDistance(std::pair<float, float> a, std::pair<float, float> b)
 {
@@ -53,11 +56,9 @@ void MinimalConectionProblem::genEdgeSet()
     i = 0;
     j = 1;
 
-    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++)
-    {
+    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++) {
         j = i+1;
-        for(NodeSet::iterator it2 = it+1; it2 != _NS.end(); it2++)
-        {
+        for(NodeSet::iterator it2 = it+1; it2 != _NS.end(); it2++) {
             EdgeSet.push_back( edge{i, j, calculateEuclideanDistance(*it, *it2) } );
             j++;
         }
@@ -65,9 +66,98 @@ void MinimalConectionProblem::genEdgeSet()
     }
 }
 
-int MinimalConectionProblem::primSolution()
+void MinimalConectionProblem::initializeDistMatrix()
 {
-    return 0;
+    for(int i = 0; i < _NS.size(); i++) {
+        for(int j = i+1; j < _NS.size(); j++) {
+            distMatrix[i][j] = calculateEuclideanDistance(_NS[i], _NS[j]);
+            distMatrix[j][i] = distMatrix[i][j];
+        }
+    }
+}
+
+
+int MinimalConectionProblem::primSolution(std::vector<int>& solution)
+{
+    int min_distance = std::numeric_limits<int>::infinity();
+
+    initializeDistMatrix();
+
+    //Test all possible paths
+    for(int i = 0; i < _NS.size() - 1; i++) {
+
+        //Initialize auxiliar structures
+        std::vector<bool> exists(_NS.size(), false);
+        std::vector<int> aux;
+
+        //Row and column index
+        int x = i;
+        int y = i+1;
+
+        //Add initial node
+        aux.push_back(i);
+        exists[i] = true;
+
+        //Initialize distance
+        int distance = 0;
+
+        while(aux.size() < _NS.size()) {
+
+            //Create auxiliar vector to get sorted distances
+            std::vector<edge> sorted;
+
+            //Initialize auxiliar vector with the row contents
+            for(int j = 0; j < distMatrix[x].size(); j++) {
+                sorted.push_back(edge{x, j, distMatrix[x][j]});
+            }
+
+            //Sort auxiliar vector
+            std::sort(sorted.begin(), sorted.end());
+
+            //Initialize index and boolean
+            int k = 0;
+            bool findMin = false;
+
+            //Search minimal distance
+            while(!findMin) {
+
+                //Get minimal distance
+                int min = sorted[k].distance;
+
+                //Get minimal node
+                y = sorted[k].b;
+                if(y == 0) y = sorted[++k].b;
+
+
+                //If node don't exists in solution set, add to them
+                if(!exists[y]) {
+                    distance += min;
+                    findMin = true;
+                    aux.push_back(y);
+                    exists[y] = true;
+
+                    //Next row
+                    x = y;
+                    std::cout<<y<<"-"<<distance<<"\n";
+                }
+
+                //If node exists in solution set, search next min
+                else{
+                    k++;
+                }
+            }
+
+        }//End while aux
+
+        if(distance > 0 && distance < min_distance){
+             min_distance = distance;
+             solution = aux;
+        }
+
+        std::cout<<"\n\nnext intempt\n\n";
+    }
+
+    return min_distance;
 }
 
 int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
@@ -82,12 +172,11 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
     std::make_heap(EdgeSet.begin(), EdgeSet.end());
     std::sort_heap(EdgeSet.begin(), EdgeSet.end());
 
-    //auxiliar nodeset to execute algorithm faster
+    //auxiliar nodeset with nodes' numeric names
     std::set<int> NS;
 
     //Initialize set vector and node set
-    for(int i = 0; i < _NS.size(); i++)
-    {
+    for(int i = 0; i < _NS.size(); i++) {
         std::set<int> new_set;
         new_set.insert(i);
         set_collection.push_back(new_set);
@@ -96,20 +185,19 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
 
     //execute algorithm
     std::vector<edge>::iterator it = EdgeSet.begin();
-    while(!NS.empty())
-    {
+    while(!NS.empty()) {
         int U, V;
         U = V = -1;
 
         //Search edge in set vector
         int i = 0;
         std::vector<std::set<int> >::iterator itsc = set_collection.begin();
-        while(U == -1 || V == -1)
-        {
-            if(!itsc->empty())
-            {
-                if(U == -1 && itsc->find(it->a) != itsc->end()) U = i;
-                if(V == -1 && itsc->find(it->b) != itsc->end()) V = i;
+        while(U == -1 || V == -1) {
+            if(!itsc->empty()) {
+                if(U == -1 && itsc->find(it->a) != itsc->end())
+                    U = i;
+                if(V == -1 && itsc->find(it->b) != itsc->end())
+                    V = i;
             }
             i++;
             itsc++;
@@ -119,16 +207,14 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         std::vector<std::set<int> >::iterator itv = set_collection.begin() + V;
 
         //If both set are different, add edge to solution set
-        if(U != V && *itu != *itv)
-        {
+        if(U != V && *itu != *itv) {
             //Delete connected nodes
             NS.erase(it->a);
             NS.erase(it->b);
 
             //Merge set
             std::set<int>::iterator itset = itv->begin();
-            while(!itv->empty())
-            {
+            while(!itv->empty()) {
                 itu->insert(*itset);
                 itset = itv->erase(itset);
             }
