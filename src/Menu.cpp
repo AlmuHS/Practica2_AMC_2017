@@ -104,6 +104,7 @@ void Menu::NTPMenu()
     int option1 = 0, option2 = 0;
     TestNTP TNTP;
     NodeSet NS;
+    std::string filename;
 
     std::cout<<"Nearest Trio Problem\n"
              <<"----------------------\n"
@@ -132,7 +133,7 @@ void Menu::NTPMenu()
         break;
 
     case 2:
-        NS = fileMenu();
+        NS = fileMenu(filename);
         TNTP.executeAlgorithm(NS, option1);
         break;
 
@@ -142,8 +143,8 @@ void Menu::NTPMenu()
 void Menu::MCPMenu(){
     int option;
     NodeSet NS;
-
     TestMCP TMCP;
+    std::string filename;
 
     std::cout<<"Minimal Connection Problem\n"
              <<"-----------------------------\n"
@@ -155,14 +156,14 @@ void Menu::MCPMenu(){
 
     clear();
 
-    NS = fileMenu();
-    TMCP.testAlgorithm(NS, option);
+    NS = fileMenu(filename);
+    TMCP.testAlgorithm(NS, option, filename);
 }
 
-NodeSet Menu::fileMenu(){
+NodeSet Menu::fileMenu(std::string& filename){
     int option = 0;
     NodeSet NS;
-    std::string filename = "";
+    filename = "";
 
     std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};
 

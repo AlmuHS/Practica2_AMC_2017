@@ -115,7 +115,6 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
             itsc++;
         }
 
-
         std::vector<std::set<int> >::iterator itu = set_collection.begin() + U;
         std::vector<std::set<int> >::iterator itv = set_collection.begin() + V;
 

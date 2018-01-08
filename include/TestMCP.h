@@ -22,6 +22,8 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "MinimalConectionProblem.h"
 #include "GenNodeSet.h"
 
+#include <string>
+
 class TestMCP
 {
     private:
@@ -29,7 +31,7 @@ class TestMCP
     public:
         TestMCP();
 
-        void testAlgorithm(const NodeSet &NS, int algorithm);
+        void testAlgorithm(const NodeSet &NS, int algorithm, std::string filename);
 
 
 };

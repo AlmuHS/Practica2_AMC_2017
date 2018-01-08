@@ -23,19 +23,31 @@ TestMCP::TestMCP()
     //ctor
 }
 
-void TestMCP::testAlgorithm(const NodeSet& NS, int algorithm){
+void TestMCP::testAlgorithm(const NodeSet& NS, int algorithm, std::string filename){
 
     MinimalConectionProblem MCP(NS);
 
     std::multiset<edge> solution;
     int distance;
 
+    filename += ".tour";
+
     if(algorithm == 2) distance = MCP.kruskalSolution(solution);
+
+    std::ofstream fout((char*)filename.c_str());
+    fout<<"NAME: "<<filename<<"\n"
+        <<"TYPE: TOUR\n"
+        <<"DIMENSION: "<<NS.size()<<"\n"
+        <<"SOLUTION: "<<distance<<"\n"
+        <<"TOUR_SECTION\n";
 
     std::cout<<"\n\nThe minimal connection tree is: \n";
     for(std::set<edge>::iterator it = solution.begin(); it != solution.end(); it++){
         std::cout<<it->a<<"-"<<it->b<<", ";
+        fout<<it->a<<", "<<it->b<<"\n";
     }
+    fout<<"EOF";
 
     std::cout<<"\nThe minimal distance is "<<distance;
+
 }

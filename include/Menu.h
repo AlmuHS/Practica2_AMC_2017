@@ -20,6 +20,8 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "GenNodeSet.h"
 
+#include <string>
+
 class Menu
 {
     public:
@@ -28,10 +30,9 @@ class Menu
         void MainMenu();
         void NTPMenu();
         void MCPMenu();
-        NodeSet fileMenu();
+        NodeSet fileMenu(std::string& filename);
 
     protected:
-
     private:
 };
 
