@@ -108,10 +108,10 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
             std::vector<edge> sorted;
 
             //Initialize auxiliar vector with the row contents
-            std::vector<int>::iterator it = distMatrix[x].begin();
-            for(int j = 0; j < distMatrix[x].size(); j++) {
+            int j = 0;
+            for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++) {
                 sorted.push_back(edge{x, j, *it});
-                it++;
+                j++;
             }
 
             //Sort auxiliar vector
