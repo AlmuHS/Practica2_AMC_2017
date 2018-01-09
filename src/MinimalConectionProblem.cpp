@@ -79,7 +79,7 @@ void MinimalConectionProblem::initializeDistMatrix()
 
 int MinimalConectionProblem::primSolution(std::vector<int>& solution)
 {
-    int min_distance = std::numeric_limits<int>::infinity();
+    int min_distance = std::numeric_limits<int>::max();
 
     initializeDistMatrix();
 
@@ -92,7 +92,7 @@ int MinimalConectionProblem::primSolution(std::vector<int>& solution)
 
         //Row and column index
         int x = i;
-        int y = i+1;
+        int y = 0;
 
         //Add initial node
         aux.push_back(i);
@@ -115,7 +115,7 @@ int MinimalConectionProblem::primSolution(std::vector<int>& solution)
             std::sort(sorted.begin(), sorted.end());
 
             //Initialize index and boolean
-            int k = 0;
+            int k = 1;
             bool findMin = false;
 
             //Search minimal distance
@@ -126,8 +126,6 @@ int MinimalConectionProblem::primSolution(std::vector<int>& solution)
 
                 //Get minimal node
                 y = sorted[k].b;
-                if(y == 0) y = sorted[++k].b;
-
 
                 //If node don't exists in solution set, add to them
                 if(!exists[y]) {
