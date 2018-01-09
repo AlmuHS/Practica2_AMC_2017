@@ -79,91 +79,59 @@ void MinimalConectionProblem::initializeDistMatrix()
 
 int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 {
-    int min_distance = std::numeric_limits<int>::max();
+    int distance = 0;
 
     initializeDistMatrix();
 
-    //Test all possible paths
-    for(int i = 0; i < _NS.size() - 1; i++) {
+    int x = 0;
+    int y = 0;
 
-        //Initialize auxiliar structures
-        std::vector<bool> exists(_NS.size(), false);
-        std::multiset<edge> aux;
-        std::set<int> B;
+    std::multiset<int> B;
 
-        //Row and column index
-        int x = i;
-        int y = i+1;
+    int min = std::numeric_limits<int>::max();
 
-        //Add initial node
-        B.insert(i);
-        exists[i] = true;
+    while(solution.size() < _NS.size()){
 
-        //Initialize distance
-        int distance = 0;
+        B.insert(y);
 
-        while(B.size() < _NS.size()) {
+        for(std::multiset<int>::iterator itb = B.begin(); itb != B.end(); itb++){
 
-            //Create auxiliar vector to get sorted distances
-            std::vector<edge> sorted;
+            x = *itb;
 
-            //Initialize auxiliar vector with the row contents
+            std::vector<edge> sort_vector;
             int j = 0;
-            for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++) {
-                sorted.push_back(edge{x, j, *it});
+            for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++){
+                sort_vector.push_back(edge{x, j, *it});
                 j++;
             }
+            std::sort(sort_vector.begin(), sort_vector.end());
 
-            //Sort auxiliar vector
-            std::sort(sorted.begin(), sorted.end());
+            std::vector<edge>::iterator itsort = sort_vector.begin() + 1;
 
-            //Initialize index and boolean
-            std::vector<edge>::iterator itsort = sorted.begin();
-            bool findMin = false;
+            bool findmin = false;
 
-            //Search minimal distance
-            while(!findMin) {
+            while(!findmin){
+                int next = itsort->b;
+                int newmin = itsort->distance;
 
-                //Get minimal distance
-                int min = itsort->distance;
-
-                //Get minimal node
-                y = itsort->b;
-
-                //If node don't exists in solution set, add to them
-                if(!exists[y]) {
-                    distance += min;
-                    findMin = true;
-                    aux.insert(edge{x, y, min});
-                    B.insert(y);
-                    exists[y] = true;
-
-                    //Next row
-                    x = y;
-                    std::cout<<y<<"-"<<distance<<"\n";
+                if(B.find(next) == B.end()){
+                    findmin = true;
+                    if(newmin > 0 && newmin < min){
+                         min = newmin;
+                         y = next;
+                    }
                 }
+                else itsort++;
+            }//End while findmin
 
-                //If node exists in solution set, search next min
-                else{
-                    itsort++;
-                }
+        }//End for itb
 
-            }
-
-            //If distance is superior to min, skip next iteration
-            if(distance > min_distance) break;
-
-        }//End while aux
-
-        if(distance > 0 && distance < min_distance){
-             min_distance = distance;
-             solution = aux;
-        }
-
-        std::cout<<"\n\nnext intempt\n\n";
+        distance += min;
+        solution.insert(edge{x, y, min});
+        min = distance;
     }
 
-    return min_distance;
+    return distance;
 }
 
 int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
