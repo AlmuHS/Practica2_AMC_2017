@@ -93,7 +93,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
         //Row and column index
         int x = i;
-        int y = 0;
+        int y = i+1;
 
         //Add initial node
         B.insert(i);
