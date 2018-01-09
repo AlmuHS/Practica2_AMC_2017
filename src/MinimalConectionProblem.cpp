@@ -147,7 +147,11 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
                 else{
                     itsort++;
                 }
+
             }
+
+            //If distance is superior to min, skip next iteration
+            if(distance > min_distance) break;
 
         }//End while aux
 
