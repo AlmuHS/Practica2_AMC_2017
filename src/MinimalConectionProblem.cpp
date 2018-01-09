@@ -108,25 +108,27 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
             std::vector<edge> sorted;
 
             //Initialize auxiliar vector with the row contents
+            std::vector<int>::iterator it = distMatrix[x].begin();
             for(int j = 0; j < distMatrix[x].size(); j++) {
-                sorted.push_back(edge{x, j, distMatrix[x][j]});
+                sorted.push_back(edge{x, j, *it});
+                it++;
             }
 
             //Sort auxiliar vector
             std::sort(sorted.begin(), sorted.end());
 
             //Initialize index and boolean
-            int k = 1;
+            std::vector<edge>::iterator itsort = sorted.begin();
             bool findMin = false;
 
             //Search minimal distance
             while(!findMin) {
 
                 //Get minimal distance
-                int min = sorted[k].distance;
+                int min = itsort->distance;
 
                 //Get minimal node
-                y = sorted[k].b;
+                y = itsort->b;
 
                 //If node don't exists in solution set, add to them
                 if(!exists[y]) {
@@ -143,7 +145,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
                 //If node exists in solution set, search next min
                 else{
-                    k++;
+                    itsort++;
                 }
             }
 
