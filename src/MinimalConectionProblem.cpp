@@ -77,7 +77,7 @@ void MinimalConectionProblem::initializeDistMatrix()
 }
 
 
-int MinimalConectionProblem::primSolution(std::vector<int>& solution)
+int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 {
     int min_distance = std::numeric_limits<int>::max();
 
@@ -88,20 +88,21 @@ int MinimalConectionProblem::primSolution(std::vector<int>& solution)
 
         //Initialize auxiliar structures
         std::vector<bool> exists(_NS.size(), false);
-        std::vector<int> aux;
+        std::multiset<edge> aux;
+        std::set<int> B;
 
         //Row and column index
         int x = i;
         int y = 0;
 
         //Add initial node
-        aux.push_back(i);
+        B.insert(i);
         exists[i] = true;
 
         //Initialize distance
         int distance = 0;
 
-        while(aux.size() < _NS.size()) {
+        while(B.size() < _NS.size()) {
 
             //Create auxiliar vector to get sorted distances
             std::vector<edge> sorted;
@@ -131,7 +132,8 @@ int MinimalConectionProblem::primSolution(std::vector<int>& solution)
                 if(!exists[y]) {
                     distance += min;
                     findMin = true;
-                    aux.push_back(y);
+                    aux.insert(edge{x, y, min});
+                    B.insert(y);
                     exists[y] = true;
 
                     //Next row

@@ -28,12 +28,11 @@ void TestMCP::testAlgorithm(const NodeSet& NS, int algorithm, std::string filena
     MinimalConectionProblem MCP(NS);
 
     std::multiset<edge> solution;
-    std::vector<int> v_solution;
     int distance;
 
     filename += ".tour";
 
-    if (algorithm == 1) distance = MCP.primSolution(v_solution);
+    if (algorithm == 1) distance = MCP.primSolution(solution);
     else if(algorithm == 2) distance = MCP.kruskalSolution(solution);
 
     std::ofstream fout((char*)filename.c_str());
@@ -45,19 +44,11 @@ void TestMCP::testAlgorithm(const NodeSet& NS, int algorithm, std::string filena
 
     std::cout<<"\n\nThe minimal connection tree is: \n";
 
-    if(algorithm == 2){
-        for(std::set<edge>::iterator it = solution.begin(); it != solution.end(); it++){
-            std::cout<<it->a<<"-"<<it->b<<", ";
-            fout<<it->a<<", "<<it->b<<"\n";
-        }
-        fout<<"EOF";
+    for(std::set<edge>::iterator it = solution.begin(); it != solution.end(); it++){
+        std::cout<<it->a<<"-"<<it->b<<", ";
+        fout<<it->a<<", "<<it->b<<"\n";
     }
-    else{
-        for(std::vector<int>::iterator it = v_solution.begin(); it != v_solution.end(); it++){
-            std::cout<<*it<<"-";
-            fout<<*it<<", "<<*(it+1)<<"\n";
-        }
-    }
+    fout<<"EOF";
 
     std::cout<<"\nThe minimal distance is "<<distance;
 
