@@ -83,51 +83,61 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
     initializeDistMatrix();
 
-    int x = 0;
-    int y = 0;
+    int x, y = 0;
 
-    std::multiset<int> B;
-
+    std::set<int> B;
     int min = std::numeric_limits<int>::max();
 
-    while(solution.size() < _NS.size()){
+    std::set<int> NS;
+    for(int i = 0; i < _NS.size(); i++){
+        NS.insert(i);
+    }
 
+    while(!NS.empty()){
+
+        //Add new node to node set
         B.insert(y);
 
+        //Generates vector with sorted edges
+        std::vector<edge> sort_vector;
         for(std::multiset<int>::iterator itb = B.begin(); itb != B.end(); itb++){
-
             x = *itb;
 
-            std::vector<edge> sort_vector;
             int j = 0;
             for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++){
-                sort_vector.push_back(edge{x, j, *it});
+                if(*it > 0) sort_vector.push_back(edge{x, j, *it});
                 j++;
             }
             std::sort(sort_vector.begin(), sort_vector.end());
+        }
 
-            std::vector<edge>::iterator itsort = sort_vector.begin() + 1;
 
-            bool findmin = false;
+        //Search minimal edge
+        std::vector<edge>::iterator itsort = sort_vector.begin();
+        bool findmin = false;
 
-            while(!findmin){
-                int next = itsort->b;
-                int newmin = itsort->distance;
+        while(!findmin){
+            int next = itsort->b;
 
-                if(B.find(next) == B.end()){
-                    findmin = true;
-                    if(newmin > 0 && newmin < min){
-                         min = newmin;
-                         y = next;
-                    }
-                }
-                else itsort++;
-            }//End while findmin
+            if(itsort->distance > 0 && B.count(next) == 0){
+                findmin = true;
+                std::cout<<x<<"-"<<y<<"-"<<distance<<std::endl;
+                min = itsort->distance;
+                y = next;
 
-        }//End for itb
+                itsort->distance = std::numeric_limits<int>::max();
+            }
+            else{
+                itsort++;
+            }
+        }//End while findmin
 
         distance += min;
         solution.insert(edge{x, y, min});
+
+        NS.erase(x);
+        NS.erase(y);
+
         min = distance;
     }
 
