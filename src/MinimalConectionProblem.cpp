@@ -93,39 +93,41 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
         NS.insert(i);
     }
 
+    //Generates vector with sorted edges
+    std::multiset<edge> sort_set;
+    int j = 0;
+    for(std::vector<int>::iterator it = distMatrix[0].begin(); it != distMatrix[0].end(); it++){
+        if(*it > 0) sort_set.insert(edge{0, j, *it});
+        j++;
+    }
+
     while(!NS.empty()){
 
         //Add new node to node set
         B.insert(y);
+        x = y;
 
-        //Generates vector with sorted edges
-        std::vector<edge> sort_vector;
-        for(std::multiset<int>::iterator itb = B.begin(); itb != B.end(); itb++){
-            x = *itb;
-
-            int j = 0;
-            for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++){
-                if(*it > 0) sort_vector.push_back(edge{x, j, *it});
-                j++;
-            }
-            std::sort(sort_vector.begin(), sort_vector.end());
+        int j = 0;
+        for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++){
+            if(*it > 0) sort_set.insert(edge{x, j, *it});
+            j++;
         }
 
-
         //Search minimal edge
-        std::vector<edge>::iterator itsort = sort_vector.begin();
+        std::multiset<edge>::iterator itsort = sort_set.begin();
         bool findmin = false;
+        edge aux_min = *itsort;
 
         while(!findmin){
             int next = itsort->b;
 
             if(itsort->distance > 0 && B.count(next) == 0){
                 findmin = true;
-                std::cout<<x<<"-"<<y<<"-"<<distance<<std::endl;
+                std::cout<<x<<"-"<<next<<"-"<<distance<<std::endl;
                 min = itsort->distance;
                 y = next;
 
-                itsort->distance = std::numeric_limits<int>::max();
+                aux_min = *itsort;
             }
             else{
                 itsort++;
@@ -137,6 +139,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
         NS.erase(x);
         NS.erase(y);
+        sort_set.erase(aux_min);
 
         min = distance;
     }

@@ -38,12 +38,14 @@
 		<Unit filename="include/Menu.h" />
 		<Unit filename="include/MinimalConectionProblem.h" />
 		<Unit filename="include/NearestTrioProblem.h" />
+		<Unit filename="include/TestMCP.h" />
 		<Unit filename="include/TestNTP.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/GenNodeSet.cpp" />
 		<Unit filename="src/Menu.cpp" />
 		<Unit filename="src/MinimalConectionProblem.cpp" />
 		<Unit filename="src/NearestTrioProblem.cpp" />
+		<Unit filename="src/TestMCP.cpp" />
 		<Unit filename="src/TestNTP.cpp" />
 		<Extensions>
 			<code_completion />
