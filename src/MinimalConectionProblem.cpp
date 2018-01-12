@@ -56,9 +56,11 @@ void MinimalConectionProblem::genEdgeSet()
     i = 0;
     j = 1;
 
-    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++) {
+    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++)
+    {
         j = i+1;
-        for(NodeSet::iterator it2 = it+1; it2 != _NS.end(); it2++) {
+        for(NodeSet::iterator it2 = it+1; it2 != _NS.end(); it2++)
+        {
             EdgeSet.push_back( edge{i, j, calculateEuclideanDistance(*it, *it2) } );
             j++;
         }
@@ -68,8 +70,10 @@ void MinimalConectionProblem::genEdgeSet()
 
 void MinimalConectionProblem::initializeDistMatrix()
 {
-    for(int i = 0; i < _NS.size(); i++) {
-        for(int j = i+1; j < _NS.size(); j++) {
+    for(int i = 0; i < _NS.size(); i++)
+    {
+        for(int j = i+1; j < _NS.size(); j++)
+        {
             distMatrix[i][j] = calculateEuclideanDistance(_NS[i], _NS[j]);
             distMatrix[j][i] = distMatrix[i][j];
         }
@@ -79,72 +83,79 @@ void MinimalConectionProblem::initializeDistMatrix()
 
 int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 {
-    int distance = 0;
+    int min_distance = std::numeric_limits<int>::max();
 
     initializeDistMatrix();
 
-    int x, y = 0;
+    for(int i = 0; i < _NS.size(); i++)
+    {
 
-    std::set<int> B;
-    int min = std::numeric_limits<int>::max();
+        int x, y = i;
 
-    std::set<int> NS;
-    for(int i = 0; i < _NS.size(); i++){
-        NS.insert(i);
-    }
-
-    //Generates vector with sorted edges
-    std::multiset<edge> sort_set;
-    int j = 0;
-    for(std::vector<int>::iterator it = distMatrix[0].begin(); it != distMatrix[0].end(); it++){
-        if(*it > 0) sort_set.insert(edge{0, j, *it});
-        j++;
-    }
-
-    while(!NS.empty()){
-
-        //Add new node to node set
-        B.insert(y);
         x = y;
 
-        int j = 0;
-        for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++){
-            if(*it > 0) sort_set.insert(edge{x, j, *it});
-            j++;
+        //Solution nodes set
+        std::set<int> B;
+
+        //Node set (inverse to B)
+        std::set<int> NS;
+
+        //Path distance
+        int distance = 0;
+
+        //Partial solution set
+        std::multiset<edge> aux;
+
+        //Initialize node set
+        for(int i = 0; i < _NS.size(); i++)
+        {
+            NS.insert(i);
         }
 
-        //Search minimal edge
-        std::multiset<edge>::iterator itsort = sort_set.begin();
-        bool findmin = false;
-        edge aux_min = *itsort;
+        //Set Edgeset
+        std::multiset<edge> sort_set;
 
-        while(!findmin){
-            int next = itsort->b;
 
-            if(itsort->distance > 0 && B.count(next) == 0){
-                findmin = true;
-                std::cout<<x<<"-"<<next<<"-"<<distance<<std::endl;
-                min = itsort->distance;
-                y = next;
+        while(!NS.empty())
+        {
 
-                aux_min = *itsort;
+            //Add new node to node set
+            B.insert(y);
+            x = y;
+
+            int j = 0;
+            for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++)
+            {
+                if(*it > 0) sort_set.insert(edge{x, j, *it});
+                j++;
             }
-            else{
-                itsort++;
-            }
-        }//End while findmin
 
-        distance += min;
-        solution.insert(edge{x, y, min});
+            //Get minimal edge
+            std::multiset<edge>::iterator itsort = sort_set.begin();
 
-        NS.erase(x);
-        NS.erase(y);
-        sort_set.erase(aux_min);
+            //if the minimal edge point to B set, search next minimal
+            while(B.find(itsort->b) != B.end()) itsort++;
 
-        min = distance;
+            std::cout<<x<<"-"<<itsort->b<<"-"<<distance<<std::endl;
+            distance += itsort->distance;
+            y = itsort->b;
+
+            aux.insert(edge{x, y, distance});
+
+            NS.erase(x);
+            NS.erase(y);
+            sort_set.erase(*itsort);
+
+        }
+
+        if(distance < min_distance){
+            min_distance = distance;
+            solution = aux;
+        }
+
     }
 
-    return distance;
+    return min_distance;
 }
 
 int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
@@ -163,7 +174,8 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
     std::set<int> NS;
 
     //Initialize set vector and node set
-    for(int i = 0; i < _NS.size(); i++) {
+    for(int i = 0; i < _NS.size(); i++)
+    {
         std::set<int> new_set;
         new_set.insert(i);
         set_collection.push_back(new_set);
@@ -172,15 +184,18 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
 
     //execute algorithm
     std::vector<edge>::iterator it = EdgeSet.begin();
-    while(!NS.empty()) {
+    while(!NS.empty())
+    {
         int U, V;
         U = V = -1;
 
         //Search edge in set vector
         int i = 0;
         std::vector<std::set<int> >::iterator itsc = set_collection.begin();
-        while(U == -1 || V == -1) {
-            if(!itsc->empty()) {
+        while(U == -1 || V == -1)
+        {
+            if(!itsc->empty())
+            {
                 if(U == -1 && itsc->find(it->a) != itsc->end())
                     U = i;
                 if(V == -1 && itsc->find(it->b) != itsc->end())
@@ -194,14 +209,16 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         std::vector<std::set<int> >::iterator itv = set_collection.begin() + V;
 
         //If both set are different, add edge to solution set
-        if(U != V && *itu != *itv) {
+        if(U != V && *itu != *itv)
+        {
             //Delete connected nodes
             NS.erase(it->a);
             NS.erase(it->b);
 
             //Merge set
             std::set<int>::iterator itset = itv->begin();
-            while(!itv->empty()) {
+            while(!itv->empty())
+            {
                 itu->insert(*itset);
                 itset = itv->erase(itset);
             }
