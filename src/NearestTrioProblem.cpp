@@ -100,19 +100,19 @@ double NearestTrioProblem::center(NodeSet& left, NodeSet& right, double frontier
 {
     NodeSet SubLeft, SubRight;
 
-    for(NodeSet::iterator itleft = left.begin(); itleft != left.end(); itleft++)
+    for(auto& pleft: left)
     {
-        if(itleft->first >= (pivot.first - frontier))
+        if(pleft.first >= (pivot.first - frontier))
         {
-            SubLeft.push_back(*itleft);
+            SubLeft.push_back(pleft);
         }
     }
 
-    for(NodeSet::iterator itright = right.begin(); itright != right.end(); itright++)
+    for(auto& pright: right)
     {
-        if(itright->first <= (pivot.first + frontier))
+        if(pright.first <= (pivot.first + frontier))
         {
-            SubRight.push_back(*itright);
+            SubRight.push_back(pright);
         }
     }
 
@@ -130,21 +130,21 @@ double NearestTrioProblem::center(NodeSet& left, NodeSet& right, double frontier
 void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot, double& dmin)
 {
 
-    for(NodeSet::iterator it1 = aux1.begin(); it1 != aux1.end(); it1++)
+    for(auto& p1: aux1)
     {
-        for(NodeSet::iterator it2 = aux1.begin(); it2 != aux1.end(); it2++)
+        for(auto& p2: aux1)
         {
-            if(*it1 != *it2)
+            if(p1 != p2)
             {
 
-                for(NodeSet::iterator it3 = aux2.begin(); it3 != aux2.end(); it3++)
+                for(auto& p3: aux2)
                 {
-                    double distance = calculateMin(*it1, *it2, *it3);
+                    double distance = calculateMin(p1, p2, p3);
                     if(dmin == 0 || distance < dmin)
                     {
-                        this->p1 = *it1;
-                        this->p2 = *it2;
-                        this->p3 = *it3;
+                        this->p1 = p1;
+                        this->p2 = p2;
+                        this->p3 = p3;
 
                         dmin = distance;
                     }

@@ -72,14 +72,13 @@ void MinimalConectionProblem::initializeDistMatrix()
 {
     std::vector<std::vector<int> >::iterator itmatrix = distMatrix.begin();
 
-    for(NodeSet::iterator it1 = _NS.begin(); it1 != _NS.end(); it1++)
+    for(auto& i: _NS)
     {
         std::vector<int>::iterator itrow = itmatrix->begin();
 
-        for(NodeSet::iterator it2 = _NS.begin(); it2 != _NS.end(); it2++)
+        for(auto& j: _NS)
         {
-            *itrow = calculateEuclideanDistance(*it1, *it2);
-            //distMatrix[j][i] = *itrow;
+            *itrow = calculateEuclideanDistance(i, j);
             itrow++;
         }
         itmatrix++;
@@ -130,9 +129,9 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
             x = y;
 
             int j = 0;
-            for(std::vector<int>::iterator it = distMatrix[x].begin(); it != distMatrix[x].end(); it++)
+            for(auto& i :distMatrix[x])
             {
-                if(*it > 0) sort_set.insert(edge{x, j, *it});
+                if(i > 0) sort_set.insert(edge{x, j, i});
                 j++;
             }
 
