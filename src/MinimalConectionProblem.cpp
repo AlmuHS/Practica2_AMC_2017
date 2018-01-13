@@ -70,13 +70,19 @@ void MinimalConectionProblem::genEdgeSet()
 
 void MinimalConectionProblem::initializeDistMatrix()
 {
-    for(int i = 0; i < _NS.size(); i++)
+    std::vector<std::vector<int> >::iterator itmatrix = distMatrix.begin();
+
+    for(NodeSet::iterator it1 = _NS.begin(); it1 != _NS.end(); it1++)
     {
-        for(int j = i+1; j < _NS.size(); j++)
+        std::vector<int>::iterator itrow = itmatrix->begin();
+
+        for(NodeSet::iterator it2 = _NS.begin(); it2 != _NS.end(); it2++)
         {
-            distMatrix[i][j] = calculateEuclideanDistance(_NS[i], _NS[j]);
-            distMatrix[j][i] = distMatrix[i][j];
+            *itrow = calculateEuclideanDistance(*it1, *it2);
+            //distMatrix[j][i] = *itrow;
+            itrow++;
         }
+        itmatrix++;
     }
 }
 

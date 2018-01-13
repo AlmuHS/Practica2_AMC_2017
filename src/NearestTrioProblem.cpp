@@ -22,14 +22,15 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <iostream>
 #include <algorithm>
 
-bool operator<(std::pair<float, float> p1, std::pair<float, float> p2){
+bool operator<(const std::pair<float, float> &p1, const std::pair<float, float> &p2)
+{
     return(p1.first < p2.first);
 }
 
 
 NearestTrioProblem::NearestTrioProblem(const NodeSet& NS): _NS(NS)
 {
-    dmin = std::numeric_limits<double>::max();
+    min_distance = std::numeric_limits<double>::max();
 }
 
 
@@ -79,7 +80,7 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
                 double min = calculateMin(*it, *it2, *it3);
 
                 //Update absolute minimal value
-                if(min < min_distance)
+                if(min < min_distance || min_distance == 0)
                 {
                     min_distance = min;
                     p1 =  *it;
@@ -109,53 +110,63 @@ double NearestTrioProblem::center(NodeSet& left, NodeSet& right, double frontier
 
     for(NodeSet::iterator itright = right.begin(); itright != right.end(); itright++)
     {
-        if(itright->first <= (pivot.first * frontier))
+        if(itright->first <= (pivot.first + frontier))
         {
             SubRight.push_back(*itright);
         }
     }
 
-    centerExhaustiveSearch(SubLeft, SubRight, pivot);
-    centerExhaustiveSearch(SubRight, SubLeft, pivot);
+    double dmin = min_distance;
+
+    centerExhaustiveSearch(SubLeft, SubRight, pivot, dmin);
+    centerExhaustiveSearch(SubRight, SubLeft, pivot, dmin);
+
+    min_distance = dmin;
 
     return dmin;
 }
 
 //Auxiliar method for D&C algorithm, to do exhaustive search over center pointa
-void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot)
+void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot, double& dmin)
 {
 
     for(NodeSet::iterator it1 = aux1.begin(); it1 != aux1.end(); it1++)
     {
-        for(NodeSet::iterator it2 = aux1.begin()+1; it2 != aux1.end(); it2++)
+        for(NodeSet::iterator it2 = aux1.begin(); it2 != aux1.end(); it2++)
         {
-            for(NodeSet::iterator it3 = aux2.begin(); it3 != aux2.end(); it3++)
+            if(*it1 != *it2)
             {
-                double distance = calculateMin(*it1, *it2, *it3);
-                if(dmin == 0 || distance < dmin)
-                {
-                    this->p1 = *it1;
-                    this->p2 = *it2;
-                    this->p3 = *it3;
 
-                    dmin = distance;
+                for(NodeSet::iterator it3 = aux2.begin(); it3 != aux2.end(); it3++)
+                {
+                    double distance = calculateMin(*it1, *it2, *it3);
+                    if(dmin == 0 || distance < dmin)
+                    {
+                        this->p1 = *it1;
+                        this->p2 = *it2;
+                        this->p3 = *it3;
+
+                        dmin = distance;
+                    }
                 }
+
             }
         }
     }
 }
 
-double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3){
+double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+{
 
-   std::sort(_NS.begin(), _NS.end());
+    std::sort(_NS.begin(), _NS.end());
 
-   double min_distance = dcSolution(_NS);
+    double min_distance = dcSolution(_NS);
 
-   p1 = this->p1;
-   p2 = this->p2;
-   p3 = this->p3;
+    p1 = this->p1;
+    p2 = this->p2;
+    p3 = this->p3;
 
-   return min_distance;
+    return min_distance;
 }
 
 

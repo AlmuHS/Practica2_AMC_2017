@@ -30,7 +30,7 @@ class NearestTrioProblem
 private:
     NodeSet _NS;
     std::pair<float, float> p1, p2, p3;
-    double dmin;
+    double min_distance;
 
     //Calculate the distance between two nodes
     float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
@@ -48,7 +48,7 @@ public:
     double center(NodeSet& left, NodeSet& right, double frontier, std::pair<float, float>& pivot);
 
     //Auxiliar method for D&C algorithm, to do exhaustive search over center pointa
-    void centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot);
+    void centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot, double& dmin);
 
     //Call to dcSolution recursive function
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
