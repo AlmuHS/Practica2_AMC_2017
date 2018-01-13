@@ -19,7 +19,6 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #define GENNODESET_H
 
 #include <string>
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <type_traits>
@@ -41,12 +40,6 @@ public:
 
     //Generate a new NodeSet with random elements
     void genRandomNodeSet(NodeSet& NS, int size);
-
-    //Sort the NodeSet using x coordinate, using ShellSort
-    NodeSet xSortNodeSet();
-
-    //Sort the NodeSet using y coordinate, using ShellSort
-    NodeSet ySortNodeSet();
 
     //Generate a new NodeSet from a datafile
     void genNodeSetFromFile(NodeSet& NS, std::string filename);

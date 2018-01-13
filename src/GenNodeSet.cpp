@@ -83,52 +83,6 @@ void GenNodeSet::genNodeSetFromFile(NodeSet& NS, std::string filename)
     //this->_NS = NS;
 }
 
-NodeSet GenNodeSet::xSortNodeSet()
-{
-
-    for(int h = _NS.size() / 2; h > 0; h /= 2)
-    {
-
-        for(int i = h; i < _NS.size(); i++)
-        {
-            int j = i;
-            std::pair<float, float> elem = _NS[i];
-
-            while(j >= h && elem.first < _NS[j-h].first)
-            {
-                std::swap(_NS[j], _NS[j-h]);
-                j -= h;
-            }
-
-            _NS[j] = elem;
-        }
-    }
-    return _NS;
-}
-
-NodeSet GenNodeSet::ySortNodeSet()
-{
-
-    for(int h = _NS.size() / 2; h > 0; h /= 2)
-    {
-
-        for(int i = h; i < _NS.size(); i++)
-        {
-            int j = i;
-            std::pair<float, float> elem = _NS[i];
-
-            while(j >= h && elem.second < _NS[j-h].second)
-            {
-                std::swap(_NS[j], _NS[j-h]);
-                j -= h;
-            }
-
-            _NS[j] = elem;
-        }
-    }
-    return _NS;
-}
-
 void GenNodeSet::showNodeSet(NodeSet& NS)
 {
     //for(int i = 0; i < NS.size(); i++)

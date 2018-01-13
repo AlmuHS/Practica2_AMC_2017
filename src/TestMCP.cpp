@@ -18,6 +18,8 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "../include/TestMCP.h"
 
+#include <iostream>
+
 TestMCP::TestMCP()
 {
     //ctor

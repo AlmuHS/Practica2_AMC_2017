@@ -16,16 +16,20 @@ You should have received a copy of the GNU General Public License
 along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "../include/NearestTrioProblem.h"
-#include "../include/GenNodeSet.h"
 
 #include <cmath>
-#include <vector>
 #include <limits>
 #include <iostream>
+#include <algorithm>
+
+bool operator<(std::pair<float, float> p1, std::pair<float, float> p2){
+    return(p1.first < p2.first);
+}
+
 
 NearestTrioProblem::NearestTrioProblem(const NodeSet& NS): _NS(NS)
 {
-
+    dmin = 0;
 }
 
 
@@ -58,7 +62,7 @@ double NearestTrioProblem::calculateMin(const std::pair<float, float>& p1, const
     return min;
 }
 
-double NearestTrioProblem::simpleSolution(NodeSet& _NS, std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
 
     //Absolute Minimal distance
@@ -90,48 +94,86 @@ double NearestTrioProblem::simpleSolution(NodeSet& _NS, std::pair<float, float>&
     return min_distance;
 }
 
-double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+//Auxiliar method for D&C algorithm, to search center points
+double NearestTrioProblem::center(NodeSet& left, NodeSet& right, double frontier, std::pair<float, float>& pivot)
 {
-    return simpleSolution(this->_NS, p1, p2, p3);
+    NodeSet SubLeft, SubRight;
+
+    for(NodeSet::iterator itleft = left.begin(); itleft != left.end(); itleft++)
+    {
+        if(itleft->first >= (pivot.first - frontier))
+        {
+            SubLeft.push_back(*itleft);
+        }
+    }
+
+    for(NodeSet::iterator itright = right.begin(); itright != right.end(); itright++)
+    {
+        if(itright->first <= (pivot.first * frontier))
+        {
+            SubRight.push_back(*itright);
+        }
+    }
+
+    centerExhaustiveSearch(SubLeft, SubRight, pivot);
+    centerExhaustiveSearch(SubRight, SubLeft, pivot);
+
+    return dmin;
+}
+
+//Auxiliar method for D&C algorithm, to do exhaustive search over center pointa
+void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot)
+{
+
+    for(NodeSet::iterator it1 = aux1.begin(); it1 != aux1.end(); it1++)
+    {
+        for(NodeSet::iterator it2 = it1 + 1; it2 != aux1.end(); it2++)
+        {
+            for(NodeSet::iterator it3 = aux2.begin(); it3 != aux2.end(); it3++)
+            {
+                double distance = calculateMin(*it1, *it2, *it3);
+                if(dmin == 0 || distance < dmin)
+                {
+                    this->p1 = *it1;
+                    this->p2 = *it2;
+                    this->p3 = *it3;
+
+                    dmin = distance;
+                }
+            }
+        }
+    }
+}
+
+double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3){
+
+   std::sort(_NS.begin(), _NS.end());
+
+   double min_distance = dcSolution(_NS);
+
+   p1 = this->p1;
+   p2 = this->p2;
+   p3 = this->p3;
+
+   return min_distance;
 }
 
 
-double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
+double NearestTrioProblem::dcSolution(NodeSet& NS)
 {
-    GenNodeSet GenNS(_NS);
 
-    //NodeSet sortered
-    NodeSet NS = GenNS.xSortNodeSet();
-
-    //NodeSet solution
-    NodeSet solution;
-
-    //Call to recursive function
-    double min_distance = dcSolution(NS, solution, NS.size());
-
-    //Assign solution to pairs
-    p1 = solution[0];
-    p2 = solution[1];
-    p3 = solution[2];
-
-    return min_distance;
-}
-
-double NearestTrioProblem::dcSolution(NodeSet& solution, NodeSet& NSX, int n)
-{
-    if(n/2 > 3)
+    if(NS.size() >= 3)
     {
-        std::pair<float, float> middle = NSX[n/2];
-        n /= 2;
+        NodeSet::iterator it_pivot = NS.begin() + (NS.size()/2);
+        std::pair<float, float> pivot = *it_pivot;
 
-        //dcSolution()
+        NodeSet left(NS.begin(), it_pivot);
+        double dMinLeft = dcSolution(left);
+
+        NodeSet right(it_pivot + 1, NS.end());
+        double dMinRight = dcSolution(right);
+
+        return center(left, right, std::min(dMinLeft, dMinRight), pivot);
     }
-    else
-    {
-
-
-    }
-
-    return 0;
-
+    else return std::numeric_limits<double>::max();
 }
