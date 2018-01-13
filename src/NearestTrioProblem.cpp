@@ -29,7 +29,7 @@ bool operator<(std::pair<float, float> p1, std::pair<float, float> p2){
 
 NearestTrioProblem::NearestTrioProblem(const NodeSet& NS): _NS(NS)
 {
-    dmin = 0;
+    dmin = std::numeric_limits<double>::max();
 }
 
 
@@ -127,7 +127,7 @@ void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, st
 
     for(NodeSet::iterator it1 = aux1.begin(); it1 != aux1.end(); it1++)
     {
-        for(NodeSet::iterator it2 = it1 + 1; it2 != aux1.end(); it2++)
+        for(NodeSet::iterator it2 = aux1.begin()+1; it2 != aux1.end(); it2++)
         {
             for(NodeSet::iterator it3 = aux2.begin(); it3 != aux2.end(); it3++)
             {
@@ -161,7 +161,6 @@ double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<flo
 
 double NearestTrioProblem::dcSolution(NodeSet& NS)
 {
-
     if(NS.size() >= 3)
     {
         NodeSet::iterator it_pivot = NS.begin() + (NS.size()/2);
