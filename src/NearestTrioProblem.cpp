@@ -70,11 +70,11 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
     double min_distance = std::numeric_limits<double>::infinity();
 
     //for(size_t i = 0; i < _NS.size(); i++) {
-    for(NodeSet::iterator it = _NS.begin(); it != _NS.end(); it++)
+    for(NodeSet::const_iterator it = _NS.cbegin(); it != _NS.cend(); it++)
     {
-        for(NodeSet::iterator it2 = it+1; it2 != _NS.end(); it2++)
+        for(NodeSet::const_iterator it2 = it+1; it2 != _NS.cend(); it2++)
         {
-            for(NodeSet::iterator it3 = it2+1; it3 != _NS.end(); it3++)
+            for(NodeSet::const_iterator it3 = it2+1; it3 != _NS.cend(); it3++)
             {
                 //Calculate minimal distance in the Trio
                 double min = calculateMin(*it, *it2, *it3);
@@ -96,11 +96,11 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
 }
 
 //Auxiliar method for D&C algorithm, to search center points
-double NearestTrioProblem::center(NodeSet& left, NodeSet& right, double frontier, std::pair<float, float>& pivot)
+double NearestTrioProblem::center(const NodeSet& left, const NodeSet& right, double frontier, std::pair<float, float>& pivot)
 {
     NodeSet SubLeft, SubRight;
 
-    for(auto& pleft: left)
+    for(const auto& pleft: left)
     {
         if(pleft.first >= (pivot.first - frontier))
         {
@@ -108,7 +108,7 @@ double NearestTrioProblem::center(NodeSet& left, NodeSet& right, double frontier
         }
     }
 
-    for(auto& pright: right)
+    for(const auto& pright: right)
     {
         if(pright.first <= (pivot.first + frontier))
         {
@@ -130,14 +130,13 @@ double NearestTrioProblem::center(NodeSet& left, NodeSet& right, double frontier
 void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot, double& dmin)
 {
 
-    for(auto& p1: aux1)
+    for(const auto& p1: aux1)
     {
-        for(auto& p2: aux1)
+        for(const auto& p2: aux1)
         {
             if(p1 != p2)
             {
-
-                for(auto& p3: aux2)
+                for(const auto& p3: aux2)
                 {
                     double distance = calculateMin(p1, p2, p3);
                     if(dmin == 0 || distance < dmin)

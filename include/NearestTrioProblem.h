@@ -45,7 +45,7 @@ public:
     double simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     //Auxiliar method for D&C algorithm, to search center points
-    double center(NodeSet& left, NodeSet& right, double frontier, std::pair<float, float>& pivot);
+    double center(const NodeSet& left, const NodeSet& right, double frontier, std::pair<float, float>& pivot);
 
     //Auxiliar method for D&C algorithm, to do exhaustive search over center pointa
     void centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot, double& dmin);

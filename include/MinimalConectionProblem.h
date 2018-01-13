@@ -39,7 +39,7 @@ class MinimalConectionProblem
         std::vector<std::vector<int> > distMatrix;
 
         void genEdgeSet();
-        int calculateEuclideanDistance(std::pair<float, float> a, std::pair<float, float> b);
+        int calculateEuclideanDistance(const std::pair<float, float>& a, const std::pair<float, float>& b);
         void initializeDistMatrix();
 
     public:

@@ -42,7 +42,7 @@ MinimalConectionProblem::MinimalConectionProblem(const MinimalConectionProblem& 
 }
 
 
-int MinimalConectionProblem::calculateEuclideanDistance(std::pair<float, float> a, std::pair<float, float> b)
+int MinimalConectionProblem::calculateEuclideanDistance(const std::pair<float, float>& a, const std::pair<float, float>& b)
 {
     float xd = a.first - b.first;
     float yd = a.second - b.second;
@@ -129,9 +129,9 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
             x = y;
 
             int j = 0;
-            for(auto& i :distMatrix[x])
+            for(auto& edge_distance: distMatrix[x])
             {
-                if(i > 0) sort_set.insert(edge{x, j, i});
+                if(edge_distance > 0) sort_set.insert(edge{x, j, edge_distance});
                 j++;
             }
 
