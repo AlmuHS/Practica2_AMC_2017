@@ -146,6 +146,7 @@ void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, st
                         this->p3 = p3;
 
                         dmin = distance;
+
                     }
                 }
 
@@ -169,11 +170,11 @@ double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<flo
 }
 
 
-double NearestTrioProblem::dcSolution(NodeSet& NS)
+double NearestTrioProblem::dcSolution(const NodeSet& NS)
 {
     if(NS.size() >= 3)
     {
-        NodeSet::iterator it_pivot = NS.begin() + (NS.size()/2);
+        NodeSet::const_iterator it_pivot = NS.begin() + (NS.size()/2);
         std::pair<float, float> pivot = *it_pivot;
 
         NodeSet left(NS.begin(), it_pivot);

@@ -54,7 +54,7 @@ public:
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
 
     //Divide and Conquer recursive method
-    double dcSolution(NodeSet& NS);
+    double dcSolution(const NodeSet& NS);
 
 };
 

@@ -47,7 +47,7 @@ void GenNodeSet::genRandomNodeSet(NodeSet& NS, int size)
 }
 
 //Generate a new NodeSet from a datafile
-void GenNodeSet::genNodeSetFromFile(NodeSet& NS, std::string filename)
+void GenNodeSet::genNodeSetFromFile(NodeSet& NS, const std::string& filename)
 {
     std::ifstream file(filename.c_str());
     std::string line = "";
@@ -83,12 +83,12 @@ void GenNodeSet::genNodeSetFromFile(NodeSet& NS, std::string filename)
     //this->_NS = NS;
 }
 
-void GenNodeSet::showNodeSet(NodeSet& NS)
+void GenNodeSet::showNodeSet(const NodeSet& NS)
 {
     //for(int i = 0; i < NS.size(); i++)
-    for(NodeSet::iterator it = NS.begin(); it != NS.end(); it++)
+    for(const auto& node: NS)
     {
-        std::cout<<"<"<<it->first<<", "<<it->second<<">\n";
+        std::cout<<"<"<<node.first<<", "<<node.second<<">\n";
     }
     std::cout<<"\n";
 }

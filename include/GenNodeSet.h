@@ -42,10 +42,10 @@ public:
     void genRandomNodeSet(NodeSet& NS, int size);
 
     //Generate a new NodeSet from a datafile
-    void genNodeSetFromFile(NodeSet& NS, std::string filename);
+    void genNodeSetFromFile(NodeSet& NS, const std::string& filename);
 
     //Shows the contents of NodeSet by screen
-    void showNodeSet(NodeSet& NS);
+    void showNodeSet(const NodeSet& NS);
 };
 
 #endif // GENNODESET_H

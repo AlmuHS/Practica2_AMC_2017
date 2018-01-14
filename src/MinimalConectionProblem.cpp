@@ -104,7 +104,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
     int distance = 0;
 
     //Initialize node set
-    for(int i = 0; i < _NS.size(); i++)
+    for(unsigned int i = 0; i < _NS.size(); i++)
     {
         NS.insert(i);
     }
@@ -164,7 +164,7 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
     std::set<int> NS;
 
     //Initialize set vector and node set
-    for(int i = 0; i < _NS.size(); i++)
+    for(unsigned int i = 0; i < _NS.size(); i++)
     {
         std::set<int> new_set;
         new_set.insert(i);
@@ -173,7 +173,7 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
     }
 
     //execute algorithm
-    std::vector<edge>::iterator it = EdgeSet.begin();
+    std::vector<edge>::iterator itedge = EdgeSet.begin();
     while(!NS.empty())
     {
         int U, V;
@@ -186,9 +186,9 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         {
             if(!itsc->empty())
             {
-                if(U == -1 && itsc->find(it->a) != itsc->end())
+                if(U == -1 && itsc->find(itedge->a) != itsc->end())
                     U = i;
-                if(V == -1 && itsc->find(it->b) != itsc->end())
+                if(V == -1 && itsc->find(itedge->b) != itsc->end())
                     V = i;
             }
             i++;
@@ -202,8 +202,8 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         if(U != V && *itu != *itv)
         {
             //Delete connected nodes
-            NS.erase(it->a);
-            NS.erase(it->b);
+            NS.erase(itedge->a);
+            NS.erase(itedge->b);
 
             //Merge set
             std::set<int>::iterator itset = itv->begin();
@@ -214,11 +214,11 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
             }
 
             //Add edge to solution set
-            solution.insert(*it);
-            distance += it->distance;
-            std::cout<<it->a<<"-"<<it->b<<" ->\t"<<it->distance<<std::endl;
+            solution.insert(*itedge);
+            distance += itedge->distance;
+            std::cout<<itedge->a<<"-"<<itedge->b<<" ->\t"<<itedge->distance<<std::endl;
         }
-        it++;
+        itedge++;
     }
 
     return distance;
