@@ -32,6 +32,8 @@ private:
     std::pair<float, float> p1, p2, p3;
     double min_distance;
 
+    double time;
+
     //Calculate the distance between two nodes
     float calculateDistance(const std::pair<float, float>& p1, const std::pair<float, float>& p2);
 
@@ -55,6 +57,8 @@ public:
 
     //Divide and Conquer recursive method
     double dcSolution(const NodeSet& NS);
+
+    double getTime();
 
 };
 

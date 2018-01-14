@@ -21,6 +21,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <limits>
 #include <iostream>
 #include <algorithm>
+#include <chrono>
 
 //Overloaded operator, needed to std::sort
 bool operator<(const std::pair<float, float> &p1, const std::pair<float, float> &p2)
@@ -66,11 +67,13 @@ double NearestTrioProblem::calculateMin(const std::pair<float, float>& p1, const
 
 double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
+    std::chrono::high_resolution_clock::time_point t_start, t_end;
+
+    t_start = std::chrono::high_resolution_clock::now();
 
     //Absolute Minimal distance
     double min_distance = std::numeric_limits<double>::infinity();
 
-    //for(size_t i = 0; i < _NS.size(); i++) {
     for(NodeSet::const_iterator it = _NS.cbegin(); it != _NS.cend(); it++)
     {
         for(NodeSet::const_iterator it2 = it+1; it2 != _NS.cend(); it2++)
@@ -91,7 +94,11 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
 
             }//End k for
         }//End j for
-    }//End i for
+    }//End i
+
+    t_end = std::chrono::high_resolution_clock::now();
+
+    time = std::chrono::duration_cast<std::chrono::microseconds>(t_end - t_start).count();
 
     return min_distance;
 }
@@ -158,10 +165,16 @@ void NearestTrioProblem::centerExhaustiveSearch(const NodeSet& aux1, const NodeS
 
 double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3)
 {
+    std::chrono::high_resolution_clock::time_point t_start, t_end;
+
+    t_start = std::chrono::high_resolution_clock::now();
 
     std::sort(_NS.begin(), _NS.end());
 
     double min_distance = dcSolution(_NS);
+
+    t_end = std::chrono::high_resolution_clock::now();
+    time = std::chrono::duration_cast<std::chrono::microseconds>(t_end - t_start).count();
 
     p1 = this->p1;
     p2 = this->p2;
@@ -187,4 +200,9 @@ double NearestTrioProblem::dcSolution(const NodeSet& NS)
         return center(left, right, std::min(dMinLeft, dMinRight), pivot);
     }
     else return std::numeric_limits<double>::max();
+}
+
+
+double NearestTrioProblem::getTime(){
+    return time;
 }

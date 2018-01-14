@@ -60,7 +60,8 @@ void TestAlgorithms::executeNTPAlgorithm(const NodeSet&NS, int algorithm)
     std::cout<<"The minimal distance is: "<<min_distance<<std::endl
              <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "
              <<"<"<<p2.first<<", "<<p2.second<<"> "
-             <<"<"<<p3.first<<", "<<p3.second<<">"<<std::endl;
+             <<"<"<<p3.first<<", "<<p3.second<<">"<<std::endl
+             <<"The execution time is "<<NTP.getTime()<<" us";
 }
 
 
@@ -93,7 +94,9 @@ void TestAlgorithms::testMCPAlgorithm(const NodeSet& NS, int algorithm, std::str
     }
     fout<<"EOF";
 
-    std::cout<<"\nThe minimal distance is "<<distance;
+    std::cout<<"\nThe minimal distance is "<<distance
+             <<"\nThe execution time is "<<MCP.getTime()<<" ms";
+
 
 }
 

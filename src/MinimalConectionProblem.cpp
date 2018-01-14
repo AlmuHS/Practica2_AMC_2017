@@ -22,6 +22,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <iostream>
 #include <algorithm>
 #include <limits>
+#include <chrono>
 
 //overloaded operator, needed to std::set and std::sort
 bool operator<(const edge& e1, const edge& e2)
@@ -88,6 +89,11 @@ void MinimalConectionProblem::initializeDistMatrix()
 
 int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 {
+    std::chrono::high_resolution_clock::time_point t_start, t_end;
+
+    t_start = std::chrono::high_resolution_clock::now();
+
+
     initializeDistMatrix();
 
     //Variables to select row and column in distance matrix
@@ -110,7 +116,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
         NS.insert(i);
     }
 
-    //Set Edgeset
+    //Sort Edgeset
     std::multiset<edge> sort_set;
 
 
@@ -153,11 +159,19 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
     }
 
+    t_end = std::chrono::high_resolution_clock::now();
+
+    time = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
+
     return distance;
 }
 
 int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
 {
+    std::chrono::high_resolution_clock::time_point t_start, t_end;
+
+    t_start = std::chrono::high_resolution_clock::now();
+
     int distance = 0;
     std::vector<std::set<int> > set_collection;
 
@@ -229,6 +243,15 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         itedge++;
     }
 
+    t_end = std::chrono::high_resolution_clock::now();
+
+    time = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
+
     return distance;
 
+}
+
+
+double MinimalConectionProblem::getTime(){
+    return time;
 }
