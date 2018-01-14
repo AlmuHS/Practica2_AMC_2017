@@ -80,7 +80,7 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
                 double min = calculateMin(*it, *it2, *it3);
 
                 //Update absolute minimal value
-                if(min < min_distance || min_distance == 0)
+                if(min < min_distance)
                 {
                     min_distance = min;
                     p1 =  *it;
@@ -127,7 +127,7 @@ double NearestTrioProblem::center(const NodeSet& left, const NodeSet& right, dou
 }
 
 //Auxiliar method for D&C algorithm, to do exhaustive search over center pointa
-void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot, double& dmin)
+void NearestTrioProblem::centerExhaustiveSearch(const NodeSet& aux1, const NodeSet& aux2, std::pair<float, float>& pivot, double& dmin)
 {
 
     for(const auto& p1: aux1)
@@ -139,7 +139,7 @@ void NearestTrioProblem::centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, st
                 for(const auto& p3: aux2)
                 {
                     double distance = calculateMin(p1, p2, p3);
-                    if(dmin == 0 || distance < dmin)
+                    if(distance < dmin)
                     {
                         this->p1 = p1;
                         this->p2 = p2;

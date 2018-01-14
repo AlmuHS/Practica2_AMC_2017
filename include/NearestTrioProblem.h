@@ -48,7 +48,7 @@ public:
     double center(const NodeSet& left, const NodeSet& right, double frontier, std::pair<float, float>& pivot);
 
     //Auxiliar method for D&C algorithm, to do exhaustive search over center pointa
-    void centerExhaustiveSearch(NodeSet& aux1, NodeSet& aux2, std::pair<float, float>& pivot, double& dmin);
+    void centerExhaustiveSearch(const NodeSet& aux1, const NodeSet& aux2, std::pair<float, float>& pivot, double& dmin);
 
     //Call to dcSolution recursive function
     double dcSolution(std::pair<float, float>& p1, std::pair<float, float>& p2, std::pair<float, float>& p3);
