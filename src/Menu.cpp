@@ -16,8 +16,7 @@ You should have received a copy of the GNU General Public License
 along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "../include/Menu.h"
-#include "../include/TestNTP.h"
-#include "../include/TestMCP.h"
+#include "../include/TestAlgorithms.h"
 
 #include <iostream>
 #include <limits>
