@@ -72,7 +72,7 @@ void MinimalConectionProblem::initializeDistMatrix()
 {
     std::vector<std::vector<int> >::iterator itmatrix = distMatrix.begin();
 
-    for(auto& i: _NS)
+    for(const auto& i: _NS)
     {
         std::vector<int>::iterator itrow = itmatrix->begin();
 
@@ -88,79 +88,64 @@ void MinimalConectionProblem::initializeDistMatrix()
 
 int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 {
-    int min_distance = std::numeric_limits<int>::max();
-
     initializeDistMatrix();
 
+    int x, y = 0;
+
+    x = y;
+
+    //Solution nodes set
+    std::set<int> B;
+
+    //Node set (inverse to B)
+    std::set<int> NS;
+
+    //Path distance
+    int distance = 0;
+
+    //Initialize node set
     for(int i = 0; i < _NS.size(); i++)
     {
+        NS.insert(i);
+    }
 
-        int x, y = i;
+    //Set Edgeset
+    std::multiset<edge> sort_set;
 
+
+    while(!NS.empty())
+    {
+
+        //Add new node to node set
+        B.insert(y);
         x = y;
 
-        //Solution nodes set
-        std::set<int> B;
-
-        //Node set (inverse to B)
-        std::set<int> NS;
-
-        //Path distance
-        int distance = 0;
-
-        //Partial solution set
-        std::multiset<edge> aux;
-
-        //Initialize node set
-        for(int i = 0; i < _NS.size(); i++)
+        int j = 0;
+        for(const auto& edge_distance: distMatrix[x])
         {
-            NS.insert(i);
+            if(edge_distance > 0) sort_set.insert(edge{x, j, edge_distance});
+            j++;
         }
 
-        //Set Edgeset
-        std::multiset<edge> sort_set;
+        //Get minimal edge
+        std::multiset<edge>::iterator itsort = sort_set.begin();
 
+        //if the minimal edge point to B set, search next minimal
+        while(B.find(itsort->b) != B.end()) itsort++;
 
-        while(!NS.empty())
-        {
+        std::cout<<x<<"-"<<itsort->b<<"-"<<distance<<std::endl;
+        distance += itsort->distance;
+        y = itsort->b;
 
-            //Add new node to node set
-            B.insert(y);
-            x = y;
+        solution.insert(edge{x, y, distance});
 
-            int j = 0;
-            for(const auto& edge_distance: distMatrix[x])
-            {
-                if(edge_distance > 0) sort_set.insert(edge{x, j, edge_distance});
-                j++;
-            }
-
-            //Get minimal edge
-            std::multiset<edge>::iterator itsort = sort_set.begin();
-
-            //if the minimal edge point to B set, search next minimal
-            while(B.find(itsort->b) != B.end()) itsort++;
-
-            std::cout<<x<<"-"<<itsort->b<<"-"<<distance<<std::endl;
-            distance += itsort->distance;
-            y = itsort->b;
-
-            aux.insert(edge{x, y, distance});
-
-            NS.erase(x);
-            NS.erase(y);
-            sort_set.erase(*itsort);
-
-        }
-
-        if(distance < min_distance){
-            min_distance = distance;
-            solution = aux;
-        }
+        NS.erase(x);
+        NS.erase(y);
+        sort_set.erase(*itsort);
 
     }
 
-    return min_distance;
+    return distance;
 }
 
 int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
