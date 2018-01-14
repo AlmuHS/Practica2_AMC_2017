@@ -90,6 +90,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 {
     initializeDistMatrix();
 
+    //Variables to select row and column in distance matrix
     int x, y = 0;
 
     x = y;
@@ -118,8 +119,11 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
         //Add new node to node set
         B.insert(y);
+
+        //Travel to new node's row in distance matrix
         x = y;
 
+        //Add edges from new node to sorted edge set, using its distance matrix row
         int j = 0;
         for(const auto& edge_distance: distMatrix[x])
         {
@@ -137,10 +141,14 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
         distance += itsort->distance;
         y = itsort->b;
 
+        //Add edge to solution set
         solution.insert(edge{x, y, distance});
 
+        //Delete connected nodes
         NS.erase(x);
         NS.erase(y);
+
+        //Delete edge from sorted edge set
         sort_set.erase(*itsort);
 
     }
