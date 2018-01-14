@@ -22,6 +22,7 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <iostream>
 #include <algorithm>
 
+//Overloaded operator, needed to std::sort
 bool operator<(const std::pair<float, float> &p1, const std::pair<float, float> &p2)
 {
     return(p1.first < p2.first);
@@ -96,7 +97,7 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
 }
 
 //Auxiliar method for D&C algorithm, to search center points
-double NearestTrioProblem::center(const NodeSet& left, const NodeSet& right, double frontier, std::pair<float, float>& pivot)
+double NearestTrioProblem::center(const NodeSet& left, const NodeSet& right, const double& frontier, const std::pair<float, float>& pivot)
 {
     NodeSet SubLeft, SubRight;
 
@@ -118,8 +119,8 @@ double NearestTrioProblem::center(const NodeSet& left, const NodeSet& right, dou
 
     double dmin = min_distance;
 
-    centerExhaustiveSearch(SubLeft, SubRight, pivot, dmin);
-    centerExhaustiveSearch(SubRight, SubLeft, pivot, dmin);
+    centerExhaustiveSearch(SubLeft, SubRight, dmin);
+    centerExhaustiveSearch(SubRight, SubLeft, dmin);
 
     min_distance = dmin;
 
@@ -127,7 +128,7 @@ double NearestTrioProblem::center(const NodeSet& left, const NodeSet& right, dou
 }
 
 //Auxiliar method for D&C algorithm, to do exhaustive search over center pointa
-void NearestTrioProblem::centerExhaustiveSearch(const NodeSet& aux1, const NodeSet& aux2, std::pair<float, float>& pivot, double& dmin)
+void NearestTrioProblem::centerExhaustiveSearch(const NodeSet& aux1, const NodeSet& aux2, double& dmin)
 {
 
     for(const auto& p1: aux1)
