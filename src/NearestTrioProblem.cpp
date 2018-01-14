@@ -177,10 +177,10 @@ double NearestTrioProblem::dcSolution(const NodeSet& NS)
         NodeSet::const_iterator it_pivot = NS.begin() + (NS.size()/2);
         std::pair<float, float> pivot = *it_pivot;
 
-        NodeSet left(NS.begin(), it_pivot);
+        NodeSet left(NS.begin(), it_pivot-1);
         double dMinLeft = dcSolution(left);
 
-        NodeSet right(it_pivot + 1, NS.end());
+        NodeSet right(it_pivot, NS.end());
         double dMinRight = dcSolution(right);
 
         return center(left, right, std::min(dMinLeft, dMinRight), pivot);
