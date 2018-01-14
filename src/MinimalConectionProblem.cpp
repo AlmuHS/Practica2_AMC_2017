@@ -89,9 +89,9 @@ void MinimalConectionProblem::initializeDistMatrix()
 
 int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 {
-    std::chrono::high_resolution_clock::time_point t_start, t_end;
+    std::chrono::steady_clock::time_point t_start, t_end;
 
-    t_start = std::chrono::high_resolution_clock::now();
+    t_start = std::chrono::steady_clock::now();
 
 
     initializeDistMatrix();
@@ -159,7 +159,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
     }
 
-    t_end = std::chrono::high_resolution_clock::now();
+    t_end = std::chrono::steady_clock::now();
 
     time = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
 
@@ -168,9 +168,9 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
 
 int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
 {
-    std::chrono::high_resolution_clock::time_point t_start, t_end;
+    std::chrono::steady_clock::time_point t_start, t_end;
 
-    t_start = std::chrono::high_resolution_clock::now();
+    t_start = std::chrono::steady_clock::now();
 
     int distance = 0;
     std::vector<std::set<int> > set_collection;
@@ -243,7 +243,7 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
         itedge++;
     }
 
-    t_end = std::chrono::high_resolution_clock::now();
+    t_end = std::chrono::steady_clock::now();
 
     time = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
 
