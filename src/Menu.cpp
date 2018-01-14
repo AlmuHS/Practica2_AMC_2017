@@ -102,7 +102,7 @@ void Menu::MainMenu()
 void Menu::NTPMenu()
 {
     int option1 = 0, option2 = 0;
-    TestNTP TNTP;
+    TestAlgorithms Test;
     NodeSet NS;
     std::string filename;
 
@@ -129,12 +129,12 @@ void Menu::NTPMenu()
     {
     case 1:
 
-        TNTP.testRandom(option1);
+        Test.testNTPRandom(option1);
         break;
 
     case 2:
         NS = fileMenu(filename);
-        TNTP.executeAlgorithm(NS, option1);
+        Test.executeNTPAlgorithm(NS, option1);
         break;
 
     };
@@ -143,7 +143,7 @@ void Menu::NTPMenu()
 void Menu::MCPMenu(){
     int option;
     NodeSet NS;
-    TestMCP TMCP;
+    TestAlgorithms Test;
     std::string filename;
 
     std::cout<<"Minimal Connection Problem\n"
@@ -157,7 +157,7 @@ void Menu::MCPMenu(){
     clear();
 
     NS = fileMenu(filename);
-    TMCP.testAlgorithm(NS, option, filename);
+    Test.testMCPAlgorithm(NS, option, filename);
 }
 
 NodeSet Menu::fileMenu(std::string& filename){

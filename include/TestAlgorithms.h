@@ -20,17 +20,20 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "../include/GenNodeSet.h"
 #include "../include/NearestTrioProblem.h"
+#include "../include/MinimalConectionProblem.h"
 
 
-class TestNTP
+class TestAlgorithms
 {
 private:
 
 public:
-    TestNTP();
+    TestAlgorithms();
 
-    void testRandom(int algorithm);
-    void executeAlgorithm(const NodeSet&NS, int algorithm);
+    void testNTPRandom(int algorithm);
+    void executeNTPAlgorithm(const NodeSet&NS, int algorithm);
+
+    void testMCPAlgorithm(const NodeSet &NS, int algorithm, std::string filename);
 };
 
 #endif // TESTNTP_H
