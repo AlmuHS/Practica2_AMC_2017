@@ -45,7 +45,7 @@ public:
     void genNodeSetFromFile(NodeSet& NS, const std::string& filename);
 
     //Shows the contents of NodeSet by screen
-    void showNodeSet(const NodeSet& NS);
+    void showNodeSet();
 };
 
 #endif // GENNODESET_H

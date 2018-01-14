@@ -37,6 +37,8 @@ void GenNodeSet::genRandomNodeSet(NodeSet& NS, int size)
     std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
     std::uniform_real_distribution<float> uni(0,5000); // guaranteed unbiased
 
+    NS.clear();
+
     for(int i = 0; i < size; i++)
     {
         NS.push_back(std::make_pair(uni(rng), uni(rng)));
@@ -53,6 +55,8 @@ void GenNodeSet::genNodeSetFromFile(NodeSet& NS, const std::string& filename)
     std::string line = "";
     float x, y;
     int n = 1;
+
+    NS.clear();
 
     //Skip file headers
     std::getline(file, line);
@@ -80,13 +84,13 @@ void GenNodeSet::genNodeSetFromFile(NodeSet& NS, const std::string& filename)
         }
     }
 
-    //this->_NS = NS;
+    this->_NS = NS;
 }
 
-void GenNodeSet::showNodeSet(const NodeSet& NS)
+void GenNodeSet::showNodeSet()
 {
     //for(int i = 0; i < NS.size(); i++)
-    for(const auto& node: NS)
+    for(const auto& node: _NS)
     {
         std::cout<<"<"<<node.first<<", "<<node.second<<">\n";
     }

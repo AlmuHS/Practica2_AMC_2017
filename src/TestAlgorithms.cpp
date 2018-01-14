@@ -38,7 +38,7 @@ void TestAlgorithms::testNTPRandom(int algorithm)
     NodeSet NS;
     GenNS.genRandomNodeSet(NS, size);
 
-    GenNS.showNodeSet(NS);
+    GenNS.showNodeSet();
 
     executeNTPAlgorithm(NS, algorithm);
 }

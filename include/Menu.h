@@ -19,6 +19,8 @@ along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 #define MENU_H
 
 #include "GenNodeSet.h"
+#include "TestAlgorithms.h"
+
 
 #include <string>
 
@@ -32,8 +34,11 @@ class Menu
         void MCPMenu();
         NodeSet fileMenu(std::string& filename);
 
-    protected:
     private:
+        TestAlgorithms Test;
+        NodeSet NS;
+        GenNodeSet GenNS;
+
 };
 
 #endif // MENU_H

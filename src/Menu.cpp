@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with Practica2_AMC.  If not, see <http://www.gnu.org/licenses/>.*/
 
 #include "../include/Menu.h"
-#include "../include/TestAlgorithms.h"
+
 
 #include <iostream>
 #include <limits>
@@ -101,8 +101,6 @@ void Menu::MainMenu()
 void Menu::NTPMenu()
 {
     int option1 = 0, option2 = 0;
-    TestAlgorithms Test;
-    NodeSet NS;
     std::string filename;
 
     std::cout<<"Nearest Trio Problem\n"
@@ -141,8 +139,6 @@ void Menu::NTPMenu()
 
 void Menu::MCPMenu(){
     int option;
-    NodeSet NS;
-    TestAlgorithms Test;
     std::string filename;
 
     std::cout<<"Minimal Connection Problem\n"
@@ -161,7 +157,6 @@ void Menu::MCPMenu(){
 
 NodeSet Menu::fileMenu(std::string& filename){
     int option = 0;
-    NodeSet NS;
     filename = "";
 
     std::vector<std::string> file = {"data/berlin52.tsp/berlin52.tsp", "data/ch130.tsp/ch130.tsp", "data/ch150.tsp/ch150.tsp"};
@@ -184,10 +179,8 @@ NodeSet Menu::fileMenu(std::string& filename){
         filename = "data/" + filename + "/" + filename;
     }
 
-    GenNodeSet GenNS;
-
     GenNS.genNodeSetFromFile(NS, filename);
-    GenNS.showNodeSet(NS);
+    GenNS.showNodeSet();
 
     return NS;
 }
