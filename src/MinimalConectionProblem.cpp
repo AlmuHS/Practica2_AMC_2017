@@ -140,8 +140,11 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
         //Get minimal edge
         std::multiset<edge>::iterator itsort = sort_set.begin();
 
-        //if the minimal edge point to B set, search next minimal
-        while(B.find(itsort->b) != B.end()) itsort++;
+        //if the minimal edge point to B set, search next minimal and remove invalid edge
+        while(B.find(itsort->b) != B.end()){
+            sort_set.erase(*itsort);
+            itsort++;
+        }
 
         std::cout<<x<<"-"<<itsort->b<<"-"<<distance<<std::endl;
         distance += itsort->distance;
