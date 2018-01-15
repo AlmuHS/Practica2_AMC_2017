@@ -69,10 +69,10 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
 {
     std::chrono::steady_clock::time_point t_start, t_end;
 
-    t_start = std::chrono::steady_clock::now();
-
     //Absolute Minimal distance
     double min_distance = std::numeric_limits<double>::infinity();
+
+    t_start = std::chrono::steady_clock::now();
 
     for(NodeSet::const_iterator it = _NS.cbegin(); it != _NS.cend(); it++)
     {
@@ -90,6 +90,8 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
                     p1 =  *it;
                     p2 = *it2;
                     p3 = *it3;
+
+                    std::cout<<"<"<<p1.first<<","<<p1.second<<">, <"<<p2.first<<","<<p2.second<<">, <"<<p3.first<<","<<p3.second<<"> "<<min_distance<<"\n";
                 }
 
             }//End k for
@@ -98,7 +100,7 @@ double NearestTrioProblem::simpleSolution(std::pair<float, float>& p1, std::pair
 
     t_end = std::chrono::steady_clock::now();
 
-    time = std::chrono::duration_cast<std::chrono::microseconds>(t_end - t_start).count();
+    time = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
 
     return min_distance;
 }
@@ -174,7 +176,7 @@ double NearestTrioProblem::dcSolution(std::pair<float, float>& p1, std::pair<flo
     double min_distance = dcSolution(_NS);
 
     t_end = std::chrono::steady_clock::now();
-    time = std::chrono::duration_cast<std::chrono::microseconds>(t_end - t_start).count();
+    time = std::chrono::duration_cast<std::chrono::milliseconds>(t_end - t_start).count();
 
     p1 = this->p1;
     p2 = this->p2;

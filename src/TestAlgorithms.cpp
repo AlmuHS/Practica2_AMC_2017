@@ -61,7 +61,7 @@ void TestAlgorithms::executeNTPAlgorithm(const NodeSet&NS, int algorithm)
              <<"The minimal trio is <"<<p1.first<<", "<<p1.second<<"> "
              <<"<"<<p2.first<<", "<<p2.second<<"> "
              <<"<"<<p3.first<<", "<<p3.second<<">"<<std::endl
-             <<"The execution time is "<<NTP.getTime()<<" us";
+             <<"The execution time is "<<NTP.getTime()<<" ms";
 }
 
 
