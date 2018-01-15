@@ -173,10 +173,10 @@ int MinimalConectionProblem::kruskalSolution(std::multiset<edge>& solution)
 {
     std::chrono::steady_clock::time_point t_start, t_end;
 
-    t_start = std::chrono::steady_clock::now();
-
     int distance = 0;
     std::vector<std::set<int> > set_collection;
+
+    t_start = std::chrono::steady_clock::now();
 
     //Generate EdgeSet
     genEdgeSet();
