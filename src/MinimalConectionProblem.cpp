@@ -133,7 +133,7 @@ int MinimalConectionProblem::primSolution(std::multiset<edge>& solution)
         int j = 0;
         for(const auto& edge_distance: distMatrix[x])
         {
-            if(edge_distance > 0) sort_set.insert(edge{x, j, edge_distance});
+            if(edge_distance > 0 && B.find(j) == B.end()) sort_set.insert(edge{x, j, edge_distance});
             j++;
         }
 
